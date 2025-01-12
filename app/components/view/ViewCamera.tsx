@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export function ViewCamera() {
     const [facing, setFacing] = useState<CameraType>('back');
+    const [camera, setCamera] = useState(null);
     const [permission, requestPermission] = useCameraPermissions();
 
     if (!permission) {
@@ -21,13 +22,18 @@ export function ViewCamera() {
         );
     }
 
-    function toggleCameraFacing() {
-        setFacing(current => (current === 'back' ? 'front' : 'back'));
+    async function toggleCameraFacing() {
+
+        if (camera) {
+            const photo = await camera.takePictureAsync()
+            console.log(photo);
+        }
     }
 
     return (
         <View style={styles.container}>
-            <CameraView style={styles.camera} facing={facing}>
+            <CameraView style={styles.camera} facing={facing}
+                ref={(ref) => setCamera(ref)}>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
                         <Text style={styles.text}>Flip Camera</Text>
