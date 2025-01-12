@@ -1,4 +1,6 @@
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import { Link } from "expo-router"
+import { ViewCamera } from "@/app/components/view/ViewCamera";
 
 export default function Index() {
   return (
@@ -9,7 +11,33 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text>Home Screen</Text>
+      <Link href="/about" style={styles.button}>
+        Go to About screen
+      </Link>
+      <ViewCamera />
     </View>
+
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#25292e',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: '#fff',
+  },
+  button: {
+    padding: 10,
+    backgroundColor: '#388e3c',
+    borderRadius: 5,
+    color: '#fff',
+    fontWeight: 'bold',
+    marginTop: 10,
+  }
+});
+
