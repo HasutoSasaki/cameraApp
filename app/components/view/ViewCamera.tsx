@@ -36,7 +36,7 @@ export function ViewCamera() {
                 ref={(ref) => setCamera(ref)}>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-                        <Text style={styles.text}>Flip Camera</Text>
+                        <Text style={styles.text}>take picture</Text>
                     </TouchableOpacity>
                 </View>
             </CameraView>
