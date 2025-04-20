@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 import { Link } from "expo-router"
-import { ViewCamera } from "@/app/components/view/ViewCamera";
+import { ViewCamera } from "@/components/view/ViewCamera";
 
 export default function Index() {
   return (
@@ -17,7 +17,6 @@ export default function Index() {
       </Link>
       <ViewCamera />
     </View>
-
   );
 }
 
