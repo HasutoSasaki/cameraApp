@@ -11,10 +11,6 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Home Screen</Text>
-      <Link href="/about" style={styles.button}>
-        Go to About screen
-      </Link>
       <ViewCamera />
     </View>
   );
