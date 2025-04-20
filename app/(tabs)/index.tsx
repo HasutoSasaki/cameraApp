@@ -5,11 +5,7 @@ import { ViewCamera } from "@/components/view/ViewCamera";
 export default function Index() {
   return (
     <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      style={styles.container}
     >
       <ViewCamera />
     </View>
@@ -19,9 +15,6 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   text: {
     color: '#fff',
