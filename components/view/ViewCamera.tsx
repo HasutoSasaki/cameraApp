@@ -1,22 +1,32 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { Image } from "expo-image";
 import { useState, useRef } from 'react';
-import { Button, StyleSheet, Pressable, Text, View } from 'react-native';
+import { Button, StyleSheet, Pressable, Text, View, Modal } from 'react-native';
+import * as MediaLibrary from 'expo-media-library';
 
 export function ViewCamera() {
     const [permission, requestPermission] = useCameraPermissions();
+    const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
     const ref = useRef<CameraView>(null);
-    const [uri, setUri] = useState<string | null>(null);
+    const [lastPhoto, setLastPhoto] = useState<string | null>(null);
+    const [isGalleryVisible, setIsGalleryVisible] = useState(false);
+    const [photos, setPhotos] = useState<MediaLibrary.Asset[]>([]);
 
-    if (!permission) return <View />;
+    if (!permission || !mediaPermission) return <View />;
 
-    if (!permission.granted) {
+    if (!permission.granted || !mediaPermission.granted) {
         return (
             <View style={styles.container}>
-                <Text style={{ textAlign: "center" }}>
-                    We need your permission to use the camera
+                <Text style={{ color: "white" }}>
+                    カメラとメディアライブラリのアクセスを許可してください
                 </Text>
-                <Button onPress={requestPermission} title="grant permission" />
+                <Button
+                    title="カメラとメディアライブラリのアクセスを許可"
+                    onPress={async () => {
+                        await requestPermission();
+                        await requestMediaPermission();
+                    }}
+                />
             </View>
         );
     }
@@ -24,22 +34,23 @@ export function ViewCamera() {
     const takePicture = async () => {
         const photo = await ref.current?.takePictureAsync();
         if (!photo) return;
-        setUri(photo.uri);
+        await MediaLibrary.saveToLibraryAsync(photo.uri);
+        setLastPhoto(photo.uri);
+        await loadPhotos();
     };
 
-
-    const renderPicture = () => {
-        return (
-            <View>
-                <Image
-                    source={{ uri }}
-                    contentFit="contain"
-                    style={{ width: 300, aspectRatio: 1 }}
-                />
-                <Button onPress={() => setUri(null)} title="Take another picture" />
-            </View>
-        );
-    };
+    const loadPhotos = async () => {
+        try {
+            const { assets } = await MediaLibrary.getAssetsAsync({
+                first: 20,
+                sortBy: ['creationTime'],
+                mediaType: ['photo']
+            });
+            setPhotos(assets);
+        } catch (error) {
+            console.error('Error loading photos:', error);
+        }
+    }
 
     const renderCamera = () => {
         return (
@@ -50,15 +61,25 @@ export function ViewCamera() {
                 responsiveOrientationWhenOrientationLocked
             >
                 <View style={styles.shutterContainer}>
-                    {/* 撮影した写真が入る予定 */}
+                    <View style={styles.thumbnailContainer}>
+                        {lastPhoto ? (
+                            <Pressable onPress={() => setIsGalleryVisible(true)}>
+                                <Image
+                                    source={{ uri: lastPhoto }}
+                                    style={styles.thumbnail}
+                                    contentFit="cover"
+                                />
+                            </Pressable>
+                        ) : (
+                            <View style={[styles.thumbnail, styles.emptyThumbnail]} />
+                        )}
+                    </View>
                     <Pressable onPress={takePicture}>
                         {({ pressed }) => (
                             <View
                                 style={[
                                     styles.shutterBtn,
-                                    {
-                                        opacity: pressed ? 0.5 : 1,
-                                    },
+                                    { opacity: pressed ? 0.5 : 1 },
                                 ]}
                             >
                                 <View style={styles.shutterBtnInner} />
@@ -66,15 +87,43 @@ export function ViewCamera() {
                         )}
                     </Pressable>
                     {/* 倍率を変えられる機能が入る予定 */}
+                    <Pressable onPress={() => { }}>
+                        <Text style={{ color: "white" }}>1x</Text>
+                    </Pressable>
                 </View>
-
             </CameraView>
         )
-    }
+    };
 
+    const renderGallery = () => (
+        <Modal
+            visible={isGalleryVisible}
+            animationType="slide"
+            onRequestClose={() => setIsGalleryVisible(false)}
+        >
+            <View style={styles.galleryContainer}>
+                <Button title="閉じる" onPress={() => setIsGalleryVisible(false)} />
+                <View style={styles.photoGrid}>
+                    {photos && photos.length > 0 ? (
+                        photos.map((photo) => (
+                            <Image
+                                key={photo.id}
+                                source={{ uri: photo.uri }}
+                                style={styles.gridPhoto}
+                                contentFit="cover"
+                            />
+                        ))
+                    ) : (
+                        <Text style={{ color: "white" }}>No photos found</Text>
+                    )}
+                </View>
+            </View>
+        </Modal>
+    );
     return (
         <View style={styles.container}>
-            {uri ? renderPicture() : renderCamera()}
+            {renderCamera()}
+            {renderGallery()}
         </View>
     );
 }
@@ -90,6 +139,8 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
     },
+
+    // カメラのシャッター部分
     shutterContainer: {
         position: "absolute",
         bottom: 20,
@@ -101,6 +152,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     },
     shutterBtn: {
+
         backgroundColor: "transparent",
         borderWidth: 5,
         borderColor: "white",
@@ -114,5 +166,41 @@ const styles = StyleSheet.create({
         width: 65,
         height: 65,
         borderRadius: 50,
+    },
+
+    thumbnailContainer: {
+        width: 60, // サムネイルと同じ幅
+        height: 60, // サムネイルと同じ高さ
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyThumbnail: {
+        backgroundColor: 'transparent', // 透明
+    },
+    thumbnail: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        borderWidth: 2,
+        borderColor: 'white',
+    },
+
+    // ギャラリー部分
+    galleryContainer: {
+        flex: 1,
+        backgroundColor: '#000',
+        padding: 50,
+    },
+    photoGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        paddingTop: 20,
+    },
+    gridPhoto: {
+        width: '32%',
+        height: '32%',
+        aspectRatio: 1,
+        marginBottom: 10,
     },
 });
