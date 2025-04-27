@@ -23,29 +23,60 @@ export function RenderTiltIndicator() {
         };
     }, []);
 
-    const targetTilt = 0.15; // 後ろに反らせた状態の目標値
-    const tolerance = 0.05; // 許容範囲
-    const isAligned = Math.abs(tilt.z - targetTilt) < tolerance;
+    // Z軸の目標値（少し後ろに反らせた状態）
+    const targetTiltZ = 0.15;
+    // X軸の目標値（水平）
+    const targetTiltX = 0;
 
-    // Z軸の値からバーの位置を計算
-    const translateY = (tilt.z - targetTilt) * 40;
+    const tolerance = 0.05;
+
+    // 各軸の判定
+    const isAlignedZ = Math.abs(tilt.z - targetTiltZ) < tolerance;
+    const isAlignedX = Math.abs(tilt.x - targetTiltX) < tolerance;
+    // 両方の軸が合っているかどうか
+    const isPerfectlyAligned = isAlignedX && isAlignedZ;
+
+    // Z軸とX軸の値からバーの位置を計算
+    const translateYForZ = (tilt.z - targetTiltZ) * 40;
+    const translateYForX = tilt.x * 40;
 
     return (
         <View style={styles.tiltIndicator}>
-            <View style={styles.barContainer}>
-                {/* 基準となる固定バー */}
-                <View style={styles.baseBar} />
-                {/* 動く傾きバー */}
-                <View style={[
-                    styles.tiltBar,
-                    { transform: [{ translateY }] },
-                    isAligned && styles.alignedTiltBar
-                ]} />
+            {/* 前後の傾き（Z軸）インジケーター */}
+            <View style={styles.indicatorContainer}>
+                <Text style={styles.labelText}>前後の傾き</Text>
+                <View style={styles.barContainer}>
+                    <View style={styles.baseBar} />
+                    <View style={[
+                        styles.tiltBar,
+                        { transform: [{ translateY: translateYForZ }] },
+                        isAlignedZ && styles.alignedTiltBar
+                    ]} />
+                </View>
             </View>
-            <Text style={styles.tiltText}>
-                {isAligned ? '位置が合っています' : '角度を調整してください'}
+
+            {/* 水平の傾き（X軸）インジケーター */}
+            <View style={styles.indicatorContainer}>
+                <Text style={styles.labelText}>水平の傾き</Text>
+                <View style={styles.barContainer}>
+                    <View style={styles.baseBar} />
+                    <View style={[
+                        styles.tiltBar,
+                        { transform: [{ translateY: translateYForX }] },
+                        isAlignedX && styles.alignedTiltBar
+                    ]} />
+                </View>
+            </View>
+
+            {/* ステータステキスト */}
+            <Text style={[
+                styles.statusText,
+                isPerfectlyAligned && styles.perfectStatusText
+            ]}>
+                {isPerfectlyAligned
+                    ? '位置が完璧です！'
+                    : '角度を調整してください'}
             </Text>
-            <Text style={styles.debugText}>{`Z軸：${tilt.z.toFixed(2)}`}</Text>
         </View>
     );
 }
@@ -56,6 +87,16 @@ const styles = StyleSheet.create({
         top: 40,
         alignSelf: 'center',
         alignItems: 'center',
+        gap: 20,
+    },
+    indicatorContainer: {
+        alignItems: 'center',
+        gap: 8,
+    },
+    labelText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: '600',
     },
     barContainer: {
         position: 'relative',
@@ -81,14 +122,12 @@ const styles = StyleSheet.create({
     alignedTiltBar: {
         backgroundColor: '#00ff00',
     },
-    tiltText: {
+    statusText: {
         color: 'white',
         fontSize: 16,
-        marginTop: 10,
+        fontWeight: 'bold',
     },
-    debugText: {
-        color: 'white',
-        fontSize: 12,
-        marginTop: 5,
+    perfectStatusText: {
+        color: '#00ff00',
     },
 });
