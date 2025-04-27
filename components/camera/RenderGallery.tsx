@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { useState, FunctionComponent } from "react";
 import { Image } from "expo-image";
 import * as MediaLibrary from "expo-media-library";
-import { FullScreenImage } from "./FullScreenImage";
+import { FullScreenImage } from "./RenderFullScreenImage";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
