@@ -6,6 +6,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { RenderGallery } from './RenderGallery';
 import { RenderCamera } from './RenderCamera';
 import { RenderRequestPermission } from './RenderRequestPermission';
+import { RenderTiltIndicator } from './RenderTiltIndicator';
 
 export function ViewCamera() {
     const [permission, requestPermission] = useCameraPermissions();
@@ -28,6 +29,7 @@ export function ViewCamera() {
                 setPhotos={setPhotos}
                 setIsGalleryVisible={setIsGalleryVisible}
             />
+            <RenderTiltIndicator />
             <RenderGallery
                 isGalleryVisible={isGalleryVisible}
                 setIsGalleryVisible={setIsGalleryVisible}
