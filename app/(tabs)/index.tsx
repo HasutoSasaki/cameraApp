@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 import { Link } from "expo-router"
-import { ViewCamera } from "@/components/view/ViewCamera";
+import { ViewCamera } from "@/components/camera/ViewCamera";
 
 export default function Index() {
   return (
