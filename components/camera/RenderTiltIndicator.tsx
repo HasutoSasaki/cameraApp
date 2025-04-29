@@ -38,32 +38,17 @@ export function RenderTiltIndicator() {
 
     // Z軸とX軸の値からバーの位置を計算
     const translateYForZ = (tilt.z - targetTiltZ) * 40;
-    const translateYForX = tilt.x * 40;
+    const rotateAngleX = tilt.x * 45; // X軸の傾きを±45度の範囲で回転角度に変換
 
     return (
         <View style={styles.tiltIndicator}>
-            {/* 前後の傾き（Z軸）インジケーター */}
             <View style={styles.indicatorContainer}>
-                <Text style={styles.labelText}>前後の傾き</Text>
                 <View style={styles.barContainer}>
                     <View style={styles.baseBar} />
                     <View style={[
                         styles.tiltBar,
-                        { transform: [{ translateY: translateYForZ }] },
-                        isAlignedZ && styles.alignedTiltBar
-                    ]} />
-                </View>
-            </View>
-
-            {/* 水平の傾き（X軸）インジケーター */}
-            <View style={styles.indicatorContainer}>
-                <Text style={styles.labelText}>水平の傾き</Text>
-                <View style={styles.barContainer}>
-                    <View style={styles.baseBar} />
-                    <View style={[
-                        styles.tiltBar,
-                        { transform: [{ translateY: translateYForX }] },
-                        isAlignedX && styles.alignedTiltBar
+                        { transform: [{ rotate: `${rotateAngleX}deg` }, { translateY: translateYForZ }] },
+                        (isAlignedX && isAlignedZ) && styles.alignedTiltBar
                     ]} />
                 </View>
             </View>
@@ -74,8 +59,8 @@ export function RenderTiltIndicator() {
                 isPerfectlyAligned && styles.perfectStatusText
             ]}>
                 {isPerfectlyAligned
-                    ? '位置が完璧です！'
-                    : '角度を調整してください'}
+                    ? 'excellent!'
+                    : 'adjust the angles'}
             </Text>
         </View>
     );
@@ -84,7 +69,7 @@ export function RenderTiltIndicator() {
 const styles = StyleSheet.create({
     tiltIndicator: {
         position: 'absolute',
-        top: 40,
+        top: '45%',
         alignSelf: 'center',
         alignItems: 'center',
         gap: 20,
@@ -92,11 +77,6 @@ const styles = StyleSheet.create({
     indicatorContainer: {
         alignItems: 'center',
         gap: 8,
-    },
-    labelText: {
-        color: 'white',
-        fontSize: 14,
-        fontWeight: '600',
     },
     barContainer: {
         position: 'relative',
@@ -120,7 +100,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
     },
     alignedTiltBar: {
-        backgroundColor: '#00ff00',
+        backgroundColor: 'rgb(255, 247, 0)',
     },
     statusText: {
         color: 'white',
@@ -128,6 +108,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     perfectStatusText: {
-        color: '#00ff00',
+        color: 'rgb(255, 247, 0)',
     },
 });
