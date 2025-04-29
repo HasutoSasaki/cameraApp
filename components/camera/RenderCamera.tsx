@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import { useState, useRef, FunctionComponent } from 'react';
 import { StyleSheet, Pressable, Text, View } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
+import { ZoomControls } from './ZoomControls';
 
 interface Props {
     setIsGalleryVisible: (visible: boolean) => void;
@@ -13,6 +14,7 @@ interface Props {
 export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, setPhotos }) => {
     const ref = useRef<CameraView>(null);
     const [lastPhoto, setLastPhoto] = useState<string | null>(null);
+    const [zoom, setZoom] = useState(2);
 
     const takePicture = async () => {
         const photo = await ref.current?.takePictureAsync();
@@ -35,11 +37,16 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
         }
     }
 
+    const handleZoomChange = (newZoom: number) => {
+        setZoom(newZoom);
+    };
+
     return (
         <CameraView
             style={styles.camera}
             ref={ref}
             mute={false}
+            zoom={zoom}
             responsiveOrientationWhenOrientationLocked
         >
             <View style={styles.shutterContainer}>
@@ -69,9 +76,10 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
                     )}
                 </Pressable>
                 {/* 倍率を変えられる機能が入る予定 */}
-                <Pressable onPress={() => { }}>
-                    <Text style={{ color: "white" }}>1x</Text>
-                </Pressable>
+                <ZoomControls
+                    currentZoom={zoom}
+                    onZoomChange={handleZoomChange}
+                />
             </View>
         </CameraView>
     )
