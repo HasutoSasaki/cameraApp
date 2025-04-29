@@ -1,8 +1,7 @@
 
-import { CameraView, useCameraPermissions } from 'expo-camera';
-import { Image } from "expo-image";
+import { CameraView } from 'expo-camera';
 import { useState, useRef, FunctionComponent } from 'react';
-import { StyleSheet, Pressable, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { ZoomControls } from './ZoomControls';
 import { ShutterBtn } from './ShutterBtn';
