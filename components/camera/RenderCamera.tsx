@@ -5,6 +5,8 @@ import { useState, useRef, FunctionComponent } from 'react';
 import { StyleSheet, Pressable, Text, View } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { ZoomControls } from './ZoomControls';
+import { ShutterBtn } from './ShutterBtn';
+import { Thumbnail } from './Thumbnail';
 
 interface Props {
     setIsGalleryVisible: (visible: boolean) => void;
@@ -46,42 +48,24 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
             style={styles.camera}
             ref={ref}
             mute={false}
-            zoom={zoom}
+            // zoom={zoom}落ちるためコメントアウト
             responsiveOrientationWhenOrientationLocked
         >
             <View style={styles.shutterContainer}>
-                <View style={styles.thumbnailContainer}>
-                    {lastPhoto ? (
-                        <Pressable onPress={() => setIsGalleryVisible(true)}>
-                            <Image
-                                source={{ uri: lastPhoto }}
-                                style={styles.thumbnail}
-                                contentFit="cover"
-                            />
-                        </Pressable>
-                    ) : (
-                        <View style={[styles.thumbnail, styles.emptyThumbnail]} />
-                    )}
+                <View style={styles.gridItem}>
+                    <Thumbnail lastPhoto={lastPhoto} setIsGalleryVisible={setIsGalleryVisible} />
                 </View>
-                <Pressable onPress={takePicture}>
-                    {({ pressed }) => (
-                        <View
-                            style={[
-                                styles.shutterBtn,
-                                { opacity: pressed ? 0.5 : 1 },
-                            ]}
-                        >
-                            <View style={styles.shutterBtnInner} />
-                        </View>
-                    )}
-                </Pressable>
-                {/* 倍率を変えられる機能が入る予定 */}
-                <ZoomControls
-                    currentZoom={zoom}
-                    onZoomChange={handleZoomChange}
-                />
+                <View style={styles.gridItem}>
+                    <ShutterBtn takePicture={takePicture} />
+                </View>
+                <View style={styles.gridItem}>
+                    <ZoomControls
+                        currentZoom={zoom}
+                        onZoomChange={handleZoomChange}
+                    />
+                </View>
             </View>
-        </CameraView>
+        </CameraView >
     )
 };
 
@@ -91,22 +75,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
 
-    thumbnail: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        borderWidth: 2,
-        borderColor: 'white',
-    },
-    thumbnailContainer: {
-        width: 60, // サムネイルと同じ幅
-        height: 60, // サムネイルと同じ高さ
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    emptyThumbnail: {
-        backgroundColor: 'transparent', // 透明
-    },
+
     shutterContainer: {
         position: "absolute",
         bottom: 20,
@@ -114,22 +83,12 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         flexDirection: "row",
-        justifyContent: "space-between",
         paddingHorizontal: 30,
     },
-    shutterBtn: {
-        backgroundColor: "transparent",
-        borderWidth: 5,
-        borderColor: "white",
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+    gridItem: {
+        flexBasis: '33.33%',
         alignItems: "center",
         justifyContent: "center",
     },
-    shutterBtnInner: {
-        width: 65,
-        height: 65,
-        borderRadius: 50,
-    },
+
 });

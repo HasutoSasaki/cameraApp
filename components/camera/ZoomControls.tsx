@@ -35,17 +35,19 @@ export const ZoomControls: FunctionComponent<Props> = ({ currentZoom, onZoomChan
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 30,
         flexDirection: 'row',
-        gap: 10,
+        gap: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        borderRadius: 15,
     },
     zoomButton: {
         paddingHorizontal: 12,
         paddingVertical: 6,
-        borderRadius: 15,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
     },
     selectedZoom: {
         backgroundColor: 'white',
+        borderRadius: 15,
     },
     pressedZoom: {
         opacity: 0.7,
