@@ -7,9 +7,7 @@ export function RenderTiltIndicator() {
 
     useEffect(() => {
         let subscription;
-
         Accelerometer.setUpdateInterval(100);
-
         subscription = Accelerometer.addListener(accelerometerData => {
             setTilt({
                 x: accelerometerData.x,
@@ -17,17 +15,13 @@ export function RenderTiltIndicator() {
                 z: accelerometerData.z
             });
         });
-
-        return () => {
-            subscription && subscription.remove();
-        };
+        return subscription && subscription.remove();
     }, []);
 
     // Z軸の目標値（少し後ろに反らせた状態）
     const targetTiltZ = 0.15;
     // X軸の目標値（水平）
     const targetTiltX = 0;
-
     const tolerance = 0.05;
 
     // 各軸の判定
@@ -38,18 +32,38 @@ export function RenderTiltIndicator() {
 
     // Z軸とX軸の値からバーの位置を計算
     const translateYForZ = (tilt.z - targetTiltZ) * 40;
-    const rotateAngleX = tilt.x * 45; // X軸の傾きを±45度の範囲で回転角度に変換
+    const translateXForX = (tilt.x - targetTiltX) * 40;
 
     return (
         <View style={styles.tiltIndicator}>
             <View style={styles.indicatorContainer}>
                 <View style={styles.barContainer}>
-                    <View style={styles.baseBar} />
+                    {/* 固定の十字ベース */}
+                    <View style={styles.baseBarContainer}>
+                        <View style={styles.baseBar} />
+                        <View style={[styles.baseBar, { transform: [{ rotate: '90deg' }] }]} />
+                    </View>
+
+                    {/* 動く十字 */}
                     <View style={[
-                        styles.tiltBar,
-                        { transform: [{ rotate: `${rotateAngleX}deg` }, { translateY: translateYForZ }] },
-                        (isAlignedX && isAlignedZ) && styles.alignedTiltBar
-                    ]} />
+                        styles.tiltBarContainer,
+                        {
+                            transform: [
+                                { translateY: translateYForZ },
+                                { translateX: translateXForX }
+                            ]
+                        },
+                    ]}>
+                        <View style={[
+                            styles.tiltBar,
+                            (isAlignedX && isAlignedZ) && styles.alignedTiltBar
+                        ]} />
+                        <View style={[
+                            styles.tiltBar,
+                            { transform: [{ rotate: '90deg' }] },
+                            (isAlignedX && isAlignedZ) && styles.alignedTiltBar
+                        ]} />
+                    </View>
                 </View>
             </View>
 
@@ -80,8 +94,22 @@ const styles = StyleSheet.create({
     },
     barContainer: {
         position: 'relative',
-        width: 200,
-        height: 80,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    baseBarContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    tiltBarContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },
