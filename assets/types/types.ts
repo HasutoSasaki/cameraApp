@@ -1,0 +1,1 @@
+export type ZoomLevel = 0 | 0.5 | 1;

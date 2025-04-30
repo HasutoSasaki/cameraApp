@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
+import type { ZoomLevel } from '../../assets/types/types';
 
 interface Props {
     currentZoom: number;
-    onZoomChange: (zoom: number) => void;
+    onZoomChange: (zoom: ZoomLevel) => void;
 }
 
 export const ZoomControls: FunctionComponent<Props> = ({ currentZoom, onZoomChange }) => {
-    const zoomLevels = [1, 2, 3];
+    const zoomLevels: ZoomLevel[] = [0, 0.5, 1];
 
     return (
         <View style={styles.container}>

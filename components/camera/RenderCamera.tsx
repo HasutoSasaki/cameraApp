@@ -6,6 +6,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { ZoomControls } from './ZoomControls';
 import { ShutterBtn } from './ShutterBtn';
 import { Thumbnail } from './Thumbnail';
+import type { ZoomLevel } from '../../assets/types/types';
 
 interface Props {
     setIsGalleryVisible: (visible: boolean) => void;
@@ -15,7 +16,7 @@ interface Props {
 export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, setPhotos }) => {
     const ref = useRef<CameraView>(null);
     const [lastPhoto, setLastPhoto] = useState<string | null>(null);
-    const [zoom, setZoom] = useState(2);
+    const [zoom, setZoom] = useState<ZoomLevel>(0.5);
 
     const takePicture = async () => {
         const photo = await ref.current?.takePictureAsync();
@@ -38,7 +39,7 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
         }
     }
 
-    const handleZoomChange = (newZoom: number) => {
+    const handleZoomChange = (newZoom: ZoomLevel) => {
         setZoom(newZoom);
     };
 
@@ -47,7 +48,7 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
             style={styles.camera}
             ref={ref}
             mute={false}
-            // zoom={zoom}落ちるためコメントアウト
+            zoom={zoom}
             responsiveOrientationWhenOrientationLocked
         >
             <View style={styles.shutterContainer}>
