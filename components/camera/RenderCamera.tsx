@@ -1,4 +1,3 @@
-
 import { CameraView } from 'expo-camera';
 import { useState, useRef, FunctionComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -6,6 +5,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { ZoomControls } from './ZoomControls';
 import { ShutterBtn } from './ShutterBtn';
 import { Thumbnail } from './Thumbnail';
+import { RenderCameraGesture } from './RenderCameraGesture';
 import type { ZoomLevel } from '../../assets/types/types';
 
 interface Props {
@@ -51,6 +51,10 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
             zoom={zoom}
             responsiveOrientationWhenOrientationLocked
         >
+            <RenderCameraGesture
+                zoom={zoom}
+                setZoom={setZoom}
+            />
             <View style={styles.shutterContainer}>
                 <View style={styles.gridItem}>
                     <Thumbnail lastPhoto={lastPhoto} setIsGalleryVisible={setIsGalleryVisible} />
@@ -75,7 +79,6 @@ const styles = StyleSheet.create({
         width: "100%",
     },
 
-
     shutterContainer: {
         position: "absolute",
         bottom: 20,
@@ -89,6 +92,21 @@ const styles = StyleSheet.create({
         flexBasis: '33.33%',
         alignItems: "center",
         justifyContent: "center",
+    },
+
+    debugContainer: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 10,
+        borderRadius: 5,
+        zIndex: 999,
+    },
+    debugText: {
+        color: 'white',
+        fontSize: 14,
+        marginBottom: 5,
     },
 
 });
