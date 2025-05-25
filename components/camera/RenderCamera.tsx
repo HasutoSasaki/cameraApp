@@ -7,7 +7,7 @@ import { ShutterBtn } from './ShutterBtn';
 import { Thumbnail } from './Thumbnail';
 import { RenderCameraGesture } from './RenderCameraGesture';
 import type { ZoomLevel } from '../../assets/types/types';
-
+import { MIN_ZOOM, MAX_ZOOM, DEFAULT_ZOOM } from '../../assets/constants/zoom';
 interface Props {
     setIsGalleryVisible: (visible: boolean) => void;
     setPhotos: (photos: MediaLibrary.Asset[]) => void;
@@ -16,7 +16,7 @@ interface Props {
 export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, setPhotos }) => {
     const ref = useRef<CameraView>(null);
     const [lastPhoto, setLastPhoto] = useState<string | null>(null);
-    const [zoom, setZoom] = useState<ZoomLevel>(0.5);
+    const [zoom, setZoom] = useState<ZoomLevel>(MIN_ZOOM);
 
     const takePicture = async () => {
         const photo = await ref.current?.takePictureAsync();
@@ -40,7 +40,13 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
     }
 
     const handleZoomChange = (newZoom: ZoomLevel) => {
+        if (newZoom >= MAX_ZOOM) return;
         setZoom(newZoom);
+    };
+
+    const handleCameraReady = () => {
+        //useStateに直接0.2を設定すると反映されないためカメラが準備できたタイミングで設定
+        setZoom(DEFAULT_ZOOM);
     };
 
     return (
@@ -50,6 +56,7 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
             mute={false}
             zoom={zoom}
             responsiveOrientationWhenOrientationLocked
+            onCameraReady={handleCameraReady}
         >
             <RenderCameraGesture
                 zoom={zoom}
