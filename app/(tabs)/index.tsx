@@ -1,13 +1,13 @@
 import { Text, View, StyleSheet } from "react-native";
 import { Link } from "expo-router"
-import { ViewCamera } from "@/components/camera/ViewCamera";
+import { GroupMode } from "@/components/layout/GroupMode";
 
 export default function Index() {
   return (
     <View
       style={styles.container}
     >
-      <ViewCamera />
+      <GroupMode />
     </View>
   );
 }

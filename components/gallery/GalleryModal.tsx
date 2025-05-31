@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { useState, FunctionComponent } from "react";
 import { Image } from "expo-image";
 import * as MediaLibrary from "expo-media-library";
-import { FullScreenImage } from "./RenderFullScreenImage";
+import { FullScreenImage } from "./FullScreenImage";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
     photos: MediaLibrary.Asset[];
 }
 
-export const RenderGallery: FunctionComponent<Props> = ({ photos, isGalleryVisible, setIsGalleryVisible }) => {
+export const GalleryModal: FunctionComponent<Props> = ({ photos, isGalleryVisible, setIsGalleryVisible }) => {
     const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
     const [isFullScreenVisible, setIsFullScreenVisible] = useState(false);
 
