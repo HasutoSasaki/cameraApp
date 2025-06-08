@@ -1,13 +1,15 @@
-import { CameraView } from 'expo-camera';
-import { useState, useRef, FunctionComponent } from 'react';
+import { CameraView, type CameraRatio } from 'expo-camera';
+import { useState, useRef, useMemo, FunctionComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { ZoomControls } from '../capture/ZoomControls';
+import { ControlBar } from '../layout/ControlBar';
 import { ShutterBtn } from '../capture/ShutterBtn';
 import { Thumbnail } from '../gallery/Thumbnail';
 import { RenderCameraGesture } from './RenderCameraGesture';
 import type { ZoomLevel } from '../../assets/types/types';
 import { MIN_ZOOM, MAX_ZOOM, DEFAULT_ZOOM } from '../../assets/constants/zoom';
+import { DEFAULT_RATIO, RATIO_ASPECT_VALUES } from '@/assets/constants/ratio';
 interface Props {
     setIsGalleryVisible: (visible: boolean) => void;
     setPhotos: (photos: MediaLibrary.Asset[]) => void;
@@ -17,6 +19,13 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
     const ref = useRef<CameraView>(null);
     const [lastPhoto, setLastPhoto] = useState<string | null>(null);
     const [zoom, setZoom] = useState<ZoomLevel>(MIN_ZOOM);
+    const [ratio, setRatio] = useState<CameraRatio>(DEFAULT_RATIO);
+
+    const aspectRatio = useMemo(() => {
+        const newAspectRatio = RATIO_ASPECT_VALUES[ratio];
+        console.log('RenderCamera: Ratio changed to', ratio, 'AspectRatio:', newAspectRatio);
+        return newAspectRatio;
+    }, [ratio]);
 
     const takePicture = async () => {
         const photo = await ref.current?.takePictureAsync();
@@ -49,20 +58,28 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
         setZoom(DEFAULT_ZOOM);
     };
 
+    const handleRatioChange = (newRatio: CameraRatio) => {
+        console.log('RenderCamera: Received ratio change request:', newRatio);
+        setRatio(newRatio);
+    };
+
     return (
-        <CameraView
-            style={styles.camera}
-            ref={ref}
-            mute={false}
-            zoom={zoom}
-            responsiveOrientationWhenOrientationLocked
-            onCameraReady={handleCameraReady}
-        >
+        <>
+            <CameraView
+                style={[styles.camera, { aspectRatio }]}
+                ref={ref}
+                mute={false}
+                zoom={zoom}
+                responsiveOrientationWhenOrientationLocked
+                onCameraReady={handleCameraReady}
+                ratio={ratio}
+            />
+            <ControlBar ratio={ratio} setRatio={handleRatioChange} />
             <RenderCameraGesture
                 zoom={zoom}
                 setZoom={setZoom}
             />
-            <View style={styles.shutterContainer}>
+            <View style={styles.cameraControls}>
                 <View style={styles.gridItem}>
                     <Thumbnail lastPhoto={lastPhoto} setIsGalleryVisible={setIsGalleryVisible} />
                 </View>
@@ -76,17 +93,17 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
                     />
                 </View>
             </View>
-        </CameraView >
+        </>
     )
 };
 
 const styles = StyleSheet.create({
     camera: {
-        flex: 1,
         width: "100%",
+        aspectRatio: 4 / 3,
     },
 
-    shutterContainer: {
+    cameraControls: {
         position: "absolute",
         bottom: 20,
         left: 0,
