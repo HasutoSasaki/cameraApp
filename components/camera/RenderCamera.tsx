@@ -6,6 +6,7 @@ import { ZoomControls } from '../capture/ZoomControls';
 import { ControlBar } from '../layout/ControlBar';
 import { ShutterBtn } from '../capture/ShutterBtn';
 import { Thumbnail } from '../gallery/Thumbnail';
+import { CameraModePanel } from '../layout/CameraModePanel';
 import { RenderCameraGesture } from './RenderCameraGesture';
 import type { ZoomLevel } from '../../assets/types/types';
 import { MIN_ZOOM, MAX_ZOOM, DEFAULT_ZOOM } from '../../assets/constants/zoom';
@@ -79,6 +80,9 @@ export const RenderCamera: FunctionComponent<Props> = ({ setIsGalleryVisible, se
                 zoom={zoom}
                 setZoom={setZoom}
             />
+
+            <CameraModePanel />
+
             <View style={styles.cameraControls}>
                 <View style={styles.gridItem}>
                     <Thumbnail lastPhoto={lastPhoto} setIsGalleryVisible={setIsGalleryVisible} />
