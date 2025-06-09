@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <View style={{ flex: 1, backgroundColor: 'black' }}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="index" />
       </Stack>
     </View>
 
