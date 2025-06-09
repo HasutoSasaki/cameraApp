@@ -49,14 +49,15 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         top: 40,
+        left: 0,
         right: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         backgroundColor: 'transparent',
         borderRadius: 5,
         zIndex: ZIndex.control_bar,
-        gap: 16,
     },
 });

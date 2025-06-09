@@ -57,15 +57,13 @@ const styles = StyleSheet.create({
     ratioButton: {
         padding: 8,
         borderRadius: 8,
-        // backgroundColor: 'rgba(255, 255, 255, 0.15)',
-        borderWidth: 1,
-        // borderColor: 'rgba(255, 255, 255, 0.3)',
-        minWidth: 30,
-        minHeight: 30,
+        width: 40,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'center',
     },
     ratioImage: {
-        width: 28,
+        width: 30,
+        height: 30,
     },
 });
