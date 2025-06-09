@@ -66,16 +66,6 @@ export function RenderTiltIndicator() {
                     </View>
                 </View>
             </View>
-
-            {/* ステータステキスト */}
-            <Text style={[
-                styles.statusText,
-                isPerfectlyAligned && styles.perfectStatusText
-            ]}>
-                {isPerfectlyAligned
-                    ? 'excellent!'
-                    : 'adjust the angles'}
-            </Text>
         </View>
     );
 }
