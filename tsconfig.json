@@ -3,9 +3,15 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "strict": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "src/*"
       ]
     }
   },
