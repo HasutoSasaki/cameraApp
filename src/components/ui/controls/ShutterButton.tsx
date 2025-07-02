@@ -1,21 +1,21 @@
 import { Pressable, View, StyleSheet } from 'react-native'
 
 interface Props {
-    takePicture: () => void
+    takePicture: () => Promise<void>
 }
 
-export function ShutterBtn({ takePicture }: Props) {
+export function ShutterButton({ takePicture }: Props) {
 
     return (
         <Pressable onPress={takePicture}>
             {({ pressed }) => (
                 <View
                     style={[
-                        styles.shutterBtn,
+                        styles.ShutterButton,
                         { opacity: pressed ? 0.5 : 1 },
                     ]}
                 >
-                    <View style={styles.shutterBtnInner} />
+                    <View style={styles.ShutterButtonInner} />
                 </View>
             )}
         </Pressable>
@@ -23,7 +23,7 @@ export function ShutterBtn({ takePicture }: Props) {
 }
 
 const styles = StyleSheet.create({
-    shutterBtn: {
+    ShutterButton: {
         backgroundColor: "transparent",
         borderWidth: 5,
         borderColor: "white",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    shutterBtnInner: {
+    ShutterButtonInner: {
         width: 55,
         height: 55,
         borderRadius: 50,

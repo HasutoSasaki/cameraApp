@@ -1,7 +1,7 @@
 import { Pressable, Image, StyleSheet, View } from 'react-native'
 import { images } from '@/assets/index'
 
-export function CameraModePanel() {
+export function ModeSelector() {
 
     const modeList = [
         {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        backgroundColor: '#000',
+        backgroundColor: 'transparent',
     },
     modeButton: {
         marginHorizontal: 10,

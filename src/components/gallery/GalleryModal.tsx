@@ -12,7 +12,7 @@ type Props = {
     photos: MediaLibrary.Asset[];
 }
 
-export const GalleryModal: FunctionComponent<Props> = ({ photos, isGalleryVisible, setIsGalleryVisible }) => {
+export function GalleryModal({ photos, isGalleryVisible, setIsGalleryVisible }: Props) {
     const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
     const [isFullScreenVisible, setIsFullScreenVisible] = useState(false);
 

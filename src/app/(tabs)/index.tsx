@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 import { Link } from "expo-router"
-import { GroupMode } from "@/components/layout/GroupMode";
+import { GroupMode } from "@/components/layout/CameraLayout";
 
 export default function Index() {
   return (

@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-import { GroupMode } from '@/components/layout/GroupMode';
+import { CameraLayout } from '@/components/layout/CameraLayout';
 
 export default function indexPage() {
     return (
         <View style={styles.container}>
-            <GroupMode />
+            <CameraLayout />
         </View>
     );
 }

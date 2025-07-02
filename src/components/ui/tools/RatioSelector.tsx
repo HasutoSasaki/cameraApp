@@ -8,9 +8,7 @@ interface RatioSelectorProps {
 }
 
 export function RatioSelector({ currentRatio, onRatioChange }: RatioSelectorProps) {
-    /**
-     * Get the next ratio in the sequence, cycling back to the first when reaching the end
-     */
+
     const getNextRatio = (): CameraRatio => {
         const currentIndex = RATIO_CONFIGURATIONS.findIndex(
             config => config.ratio === currentRatio
@@ -19,9 +17,6 @@ export function RatioSelector({ currentRatio, onRatioChange }: RatioSelectorProp
         return RATIO_CONFIGURATIONS[nextIndex].ratio;
     };
 
-    /**
-     * Get the current ratio configuration for display
-     */
     const getCurrentConfig = () => {
         return RATIO_CONFIGURATIONS.find(config => config.ratio === currentRatio)
             || RATIO_CONFIGURATIONS[0];

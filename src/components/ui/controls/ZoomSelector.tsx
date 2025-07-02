@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
-import type { ZoomLevel } from '../../assets/types/types';
+import type { ZoomLevel } from '../../../assets/types/types';
 import { ZOOM_LEVELS, MIN_ZOOM, DEFAULT_ZOOM, DISPLAY_MAX } from '@/assets/constants/zoom';
+
 interface Props {
-    currentZoom: number;
-    onZoomChange: (zoom: ZoomLevel) => void;
+    handleZoomChange: (zoom: ZoomLevel) => void;
+    currentZoom: ZoomLevel;
 }
 
-export const ZoomControls: FunctionComponent<Props> = ({ currentZoom, onZoomChange }) => {
+export function ZoomSelector({ handleZoomChange, currentZoom }: Props) {
     const zoomLevels = ZOOM_LEVELS;
 
     const displayZoomLevel = (zoom: ZoomLevel) => {
@@ -36,7 +37,7 @@ export const ZoomControls: FunctionComponent<Props> = ({ currentZoom, onZoomChan
             {zoomLevels.map((zoom) => (
                 <Pressable
                     key={zoom}
-                    onPress={() => onZoomChange(zoom)}
+                    onPress={() => handleZoomChange(zoom)}
                     style={({ pressed }) => [
                         styles.zoomButton,
                         currentZoom === zoom && styles.selectedZoom,

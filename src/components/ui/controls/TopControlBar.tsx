@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { CameraRatio } from 'expo-camera';
 import { ZIndex } from '@/assets/style/zindex';
-import { RatioSelector } from '@/components/controlBar/RatioSelector';
+import { RatioSelector } from '@/components/ui/tools/RatioSelector';
 import { CameraToolsPanel } from '@/components/controlBar/CameraToolsPanel';
 
 interface ControlBarProps {
@@ -9,24 +9,20 @@ interface ControlBarProps {
     ratio: CameraRatio;
 }
 
-export function ControlBar({ setRatio, ratio }: ControlBarProps) {
+export function TopControlBar({ setRatio, ratio }: ControlBarProps) {
     const handleRatioChange = (newRatio: CameraRatio) => {
-        console.log('ControlBar: Changing ratio from', ratio, 'to', newRatio);
         setRatio(newRatio);
     };
 
     const handleDrawingGridToggle = () => {
-        console.log('ControlBar: Drawing grid toggle pressed');
         // TODO: Implement drawing grid functionality
     };
 
     const handleGridVisibilityToggle = () => {
-        console.log('ControlBar: Grid visibility toggle pressed');
         // TODO: Implement grid visibility functionality
     };
 
     const handleLevelIndicatorToggle = () => {
-        console.log('ControlBar: Level indicator toggle pressed');
         // TODO: Implement level indicator functionality
     };
 

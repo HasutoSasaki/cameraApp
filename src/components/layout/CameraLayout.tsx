@@ -3,16 +3,13 @@ import { Image } from "expo-image";
 import { useState, useRef } from 'react';
 import { Button, StyleSheet, Pressable, Text, View, Modal } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
-import { GalleryModal } from '../gallery/GalleryModal';
 import { RenderCamera } from '../camera/RenderCamera';
 import { RenderRequestPermission } from '../camera/RenderRequestPermission';
 import { RenderTiltIndicator } from '../camera/RenderTiltIndicator';
 
-export function GroupMode() {
+export function CameraLayout() {
     const [permission, requestPermission] = useCameraPermissions();
     const [mediaPermission, requestMediaPermission] = MediaLibrary.usePermissions();
-    const [isGalleryVisible, setIsGalleryVisible] = useState(false);
-    const [photos, setPhotos] = useState<MediaLibrary.Asset[]>([]);
 
     if (!permission || !mediaPermission) return <View />;
 
@@ -25,16 +22,8 @@ export function GroupMode() {
 
     return (
         <View style={styles.container}>
-            <RenderCamera
-                setPhotos={setPhotos}
-                setIsGalleryVisible={setIsGalleryVisible}
-            />
+            <RenderCamera />
             <RenderTiltIndicator />
-            <GalleryModal
-                isGalleryVisible={isGalleryVisible}
-                setIsGalleryVisible={setIsGalleryVisible}
-                photos={photos}
-            />
         </View>
     );
 }

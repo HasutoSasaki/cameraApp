@@ -7,7 +7,7 @@ interface Props {
     requestMediaPermission: () => void;
 }
 
-export const RenderRequestPermission: FunctionComponent<Props> = ({ requestPermission, requestMediaPermission }) => {
+export function RenderRequestPermission({ requestPermission, requestMediaPermission }: Props) {
     return (
         <View style={glStyles.container}>
             <Text style={{ color: "white" }}>

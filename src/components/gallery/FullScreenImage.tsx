@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { PinchGestureHandlerEventPayload, GestureEvent } from 'react-native-gesture-handler';
 
-export const FullScreenImage = ({ uri, onClose }: { uri: string, onClose: () => void }) => {
+export function FullScreenImage({ uri, onClose }: { uri: string, onClose: () => void }) {
     const scale = useSharedValue(1);
 
     const handlePinchGesture = (event: GestureEvent<PinchGestureHandlerEventPayload>) => {

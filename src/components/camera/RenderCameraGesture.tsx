@@ -2,17 +2,17 @@ import type { ZoomLevel } from '../../assets/types/types';
 import { useRef, useEffect } from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';
 
-interface UseCameraGesturesProps {
-    zoom: ZoomLevel;
-    setZoom: (zoom: ZoomLevel) => void;
-}
 interface Touch {
     pageX: number;
     pageY: number;
 }
 
-export function RenderCameraGesture({ zoom, setZoom, }: UseCameraGesturesProps) {
+interface Props {
+    handleZoomChange: (newZoom: ZoomLevel) => void;
+    zoom: ZoomLevel;
+}
 
+export function RenderCameraGesture({ handleZoomChange, zoom }: Props) {
     const lastDistance = useRef(0);
     const previousTouchCount = useRef(0);
     const zoomIncrement = 0.01;
@@ -69,7 +69,7 @@ export function RenderCameraGesture({ zoom, setZoom, }: UseCameraGesturesProps) 
                         // ズーム範囲を制限（0～1）
                         newZoom = Math.max(0, Math.min(1, newZoom));
 
-                        setZoom(newZoom as ZoomLevel);
+                        handleZoomChange(newZoom as ZoomLevel);
                     }
 
 
