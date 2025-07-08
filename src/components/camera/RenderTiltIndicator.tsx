@@ -2,37 +2,53 @@ import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
+interface Tilt {
+    x: number;
+    y: number;
+    z: number;
+}
+
+type AccelerometerSubscription = {
+    remove: () => void;
+} | null;
+
+const TILT_CONFIG = {
+    targetTiltZ: 0.15, // Z軸の目標値（少し後ろに反らせた状態）
+    targetTiltX: 0, // X軸の目標値（水平）
+    tolerance: 0.05, // 許容範囲
+    updateInterval: 100,
+    translationMultiplier: 40,
+} as const;
+
 export function RenderTiltIndicator() {
-    const [tilt, setTilt] = useState({ x: 0, y: 0, z: 0 });
+    const [tilt, setTilt] = useState<Tilt>({ x: 0, y: 0, z: 0 });
+    const [subscription, setSubscription] = useState<AccelerometerSubscription>(null);
+
+
+    const _subscribe = () => {
+        Accelerometer.setUpdateInterval(TILT_CONFIG.updateInterval);
+        const newSubscription = Accelerometer.addListener(setTilt);
+        setSubscription(newSubscription);
+    };
+
+    const _unsubscribe = () => {
+        subscription && subscription.remove();
+        setSubscription(null);
+    };
 
     useEffect(() => {
-        let subscription;
-        Accelerometer.setUpdateInterval(100);
-        subscription = Accelerometer.addListener(accelerometerData => {
-            setTilt({
-                x: accelerometerData.x,
-                y: accelerometerData.y,
-                z: accelerometerData.z
-            });
-        });
-        return subscription && subscription.remove();
+        _subscribe();
+        return () => _unsubscribe();
     }, []);
 
-    // Z軸の目標値（少し後ろに反らせた状態）
-    const targetTiltZ = 0.15;
-    // X軸の目標値（水平）
-    const targetTiltX = 0;
-    const tolerance = 0.05;
+    // Calculate alignment status for both axes
+    const isAlignedZ = Math.abs(tilt.z - TILT_CONFIG.targetTiltZ) < TILT_CONFIG.tolerance;
+    const isAlignedX = Math.abs(tilt.x - TILT_CONFIG.targetTiltX) < TILT_CONFIG.tolerance;
 
-    // 各軸の判定
-    const isAlignedZ = Math.abs(tilt.z - targetTiltZ) < tolerance;
-    const isAlignedX = Math.abs(tilt.x - targetTiltX) < tolerance;
-    // 両方の軸が合っているかどうか
-    const isPerfectlyAligned = isAlignedX && isAlignedZ;
+    // Calculate translation values for visual indicator
+    const translateYForZ = (tilt.z - TILT_CONFIG.targetTiltZ) * TILT_CONFIG.translationMultiplier;
+    const translateXForX = (tilt.x - TILT_CONFIG.targetTiltX) * TILT_CONFIG.translationMultiplier;
 
-    // Z軸とX軸の値からバーの位置を計算
-    const translateYForZ = (tilt.z - targetTiltZ) * 40;
-    const translateXForX = (tilt.x - targetTiltX) * 40;
 
     return (
         <View style={styles.tiltIndicator}>
