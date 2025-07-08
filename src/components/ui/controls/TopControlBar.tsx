@@ -21,17 +21,17 @@ export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsL
         setRatio(newRatio);
     };
 
-    const handleDrawingGridToggle = () => {
+    const toggleDrawingGrid = () => {
         setIsDrawingGridEnabled(prev => !prev);
         // TODO: Implement drawing grid functionality
     };
 
-    const handleGridVisibilityToggle = () => {
+    const toggleGridVisibility = () => {
         setIsGridVisible(prev => !prev);
         // TODO: Implement grid visibility functionality
     };
 
-    const handleLevelIndicatorToggle = () => {
+    const toggleLevelIndicator = () => {
         setIsLevelIndicatorVisible(!isLevelIndicatorVisible);
         // TODO: Implement level indicator functionality
     };
@@ -43,9 +43,9 @@ export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsL
                 onRatioChange={handleRatioChange}
             />
             <CameraToolsPanel
-                onDrawingGridToggle={handleDrawingGridToggle}
-                onGridVisibilityToggle={handleGridVisibilityToggle}
-                onLevelIndicatorToggle={handleLevelIndicatorToggle}
+                toggleDrawingGrid={toggleDrawingGrid}
+                toggleGridVisibility={toggleGridVisibility}
+                toggleLevelIndicator={toggleLevelIndicator}
                 isDrawingGridEnabled={isDrawingGridEnabled}
                 isGridVisible={isGridVisible}
                 isLevelIndicatorVisible={isLevelIndicatorVisible}

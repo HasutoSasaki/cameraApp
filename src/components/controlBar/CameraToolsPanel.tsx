@@ -1,50 +1,50 @@
 import { View, Image, StyleSheet, Pressable } from 'react-native';
 
 interface CameraToolsPanelProps {
-    onDrawingGridToggle?: () => void;
-    onGridVisibilityToggle?: () => void;
-    onLevelIndicatorToggle?: () => void;
-    isDrawingGridEnabled?: boolean;
-    isGridVisible?: boolean;
-    isLevelIndicatorVisible?: boolean;
+    toggleDrawingGrid: () => void;
+    toggleGridVisibility: () => void;
+    toggleLevelIndicator: () => void;
+    isDrawingGridEnabled: boolean;
+    isGridVisible: boolean;
+    isLevelIndicatorVisible: boolean;
 }
 
 const CAMERA_TOOLS = [
     {
         id: 'drawing-grid',
         source: require('@/assets/images/icon/grid_plus.png'),
-        action: 'onDrawingGridToggle' as const,
+        action: 'toggleDrawingGrid' as const,
         accessibilityLabel: 'Toggle drawing grid tool',
         stateKey: 'isDrawingGridEnabled' as const
     },
     {
         id: 'grid-visibility',
         source: require('@/assets/images/icon/grid.png'),
-        action: 'onGridVisibilityToggle' as const,
+        action: 'toggleGridVisibility' as const,
         accessibilityLabel: 'Toggle grid visibility',
         stateKey: 'isGridVisible' as const
     },
     {
         id: 'level-indicator',
         source: require('@/assets/images/icon/deg.png'),
-        action: 'onLevelIndicatorToggle' as const,
+        action: 'toggleLevelIndicator' as const,
         accessibilityLabel: 'Toggle level indicator',
         stateKey: 'isLevelIndicatorVisible' as const
     }
 ] as const;
 
 export function CameraToolsPanel({
-    onDrawingGridToggle,
-    onGridVisibilityToggle,
-    onLevelIndicatorToggle,
+    toggleDrawingGrid,
+    toggleGridVisibility,
+    toggleLevelIndicator,
     isDrawingGridEnabled = false,
     isGridVisible = false,
     isLevelIndicatorVisible = false
 }: CameraToolsPanelProps) {
     const actionMap = {
-        onDrawingGridToggle,
-        onGridVisibilityToggle,
-        onLevelIndicatorToggle
+        toggleDrawingGrid,
+        toggleGridVisibility,
+        toggleLevelIndicator,
     };
 
     const stateMap = {
