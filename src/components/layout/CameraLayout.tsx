@@ -5,7 +5,6 @@ import { Button, StyleSheet, Pressable, Text, View, Modal } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { RenderCamera } from '../camera/RenderCamera';
 import { RenderRequestPermission } from '../camera/RenderRequestPermission';
-import { RenderTiltIndicator } from '../camera/RenderTiltIndicator';
 
 export function CameraLayout() {
     const [permission, requestPermission] = useCameraPermissions();
@@ -23,7 +22,6 @@ export function CameraLayout() {
     return (
         <View style={styles.container}>
             <RenderCamera />
-            <RenderTiltIndicator />
         </View>
     );
 }
