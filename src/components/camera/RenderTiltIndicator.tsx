@@ -20,7 +20,11 @@ const TILT_CONFIG = {
     translationMultiplier: 40,
 } as const;
 
-export function RenderTiltIndicator() {
+interface Props {
+    isVisible: boolean;
+}
+
+export function RenderTiltIndicator({ isVisible }: Props) {
     const [tilt, setTilt] = useState<Tilt>({ x: 0, y: 0, z: 0 });
     const [subscription, setSubscription] = useState<AccelerometerSubscription>(null);
 
@@ -51,38 +55,40 @@ export function RenderTiltIndicator() {
 
 
     return (
-        <View style={styles.tiltIndicator}>
-            <View style={styles.indicatorContainer}>
-                <View style={styles.barContainer}>
-                    {/* 固定の十字ベース */}
-                    <View style={styles.baseBarContainer}>
-                        <View style={styles.baseBar} />
-                        <View style={[styles.baseBar, { transform: [{ rotate: '90deg' }] }]} />
-                    </View>
+        isVisible && (
+            <View style={styles.tiltIndicator}>
+                <View style={styles.indicatorContainer}>
+                    <View style={styles.barContainer}>
+                        {/* 固定の十字ベース */}
+                        <View style={styles.baseBarContainer}>
+                            <View style={styles.baseBar} />
+                            <View style={[styles.baseBar, { transform: [{ rotate: '90deg' }] }]} />
+                        </View>
 
-                    {/* 動く十字 */}
-                    <View style={[
-                        styles.tiltBarContainer,
-                        {
-                            transform: [
-                                { translateY: translateYForZ },
-                                { translateX: translateXForX }
-                            ]
-                        },
-                    ]}>
+                        {/* 動く十字 */}
                         <View style={[
-                            styles.tiltBar,
-                            (isAlignedX && isAlignedZ) && styles.alignedTiltBar
-                        ]} />
-                        <View style={[
-                            styles.tiltBar,
-                            { transform: [{ rotate: '90deg' }] },
-                            (isAlignedX && isAlignedZ) && styles.alignedTiltBar
-                        ]} />
+                            styles.tiltBarContainer,
+                            {
+                                transform: [
+                                    { translateY: translateYForZ },
+                                    { translateX: translateXForX }
+                                ]
+                            },
+                        ]}>
+                            <View style={[
+                                styles.tiltBar,
+                                (isAlignedX && isAlignedZ) && styles.alignedTiltBar
+                            ]} />
+                            <View style={[
+                                styles.tiltBar,
+                                { transform: [{ rotate: '90deg' }] },
+                                (isAlignedX && isAlignedZ) && styles.alignedTiltBar
+                            ]} />
+                        </View>
                     </View>
                 </View>
             </View>
-        </View>
+        )
     );
 }
 

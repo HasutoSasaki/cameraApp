@@ -1,18 +1,26 @@
 import { CameraView } from 'expo-camera';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { TopControlBar } from '../ui/controls/TopControlBar';
 import { BottomControlBar } from '../ui/controls/BottomControlBar';
 import { RenderCameraGesture } from './RenderCameraGesture';
+import { RenderTiltIndicator } from '../camera/RenderTiltIndicator';
+
 
 
 import { useCamera } from '@/hooks/useCamera';
 
 export function RenderCamera() {
     const { ref, zoom, handleCameraReady, aspectRatio, handleZoomChange, handleRatioChange, ratio, takePicture, lastPhoto, photos } = useCamera();
+    // top control bar state
+    const [isLevelIndicatorVisible, setIsLevelIndicatorVisible] = useState(true);
+
+
 
     return (
         <>
-            <TopControlBar ratio={ratio} setRatio={handleRatioChange} />
+            <TopControlBar ratio={ratio} setRatio={handleRatioChange}
+                isLevelIndicatorVisible={isLevelIndicatorVisible} setIsLevelIndicatorVisible={setIsLevelIndicatorVisible} />
             <CameraView
                 style={[styles.camera, { aspectRatio }]}
                 ref={ref}
@@ -26,6 +34,7 @@ export function RenderCamera() {
                 handleZoomChange={handleZoomChange}
                 zoom={zoom}
             />
+            <RenderTiltIndicator isVisible={isLevelIndicatorVisible} />
             <BottomControlBar
                 photos={photos}
                 zoom={zoom}

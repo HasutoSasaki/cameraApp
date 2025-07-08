@@ -8,13 +8,14 @@ import { CameraToolsPanel } from '@/components/controlBar/CameraToolsPanel';
 interface ControlBarProps {
     setRatio: (ratio: CameraRatio) => void;
     ratio: CameraRatio;
-}
+    isLevelIndicatorVisible: boolean;
+    setIsLevelIndicatorVisible: (visible: boolean) => void;
 
-export function TopControlBar({ setRatio, ratio }: ControlBarProps) {
+}
+export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsLevelIndicatorVisible }: ControlBarProps) {
     // 各ツールのON/OFF状態を管理
     const [isDrawingGridEnabled, setIsDrawingGridEnabled] = useState(false);
     const [isGridVisible, setIsGridVisible] = useState(false);
-    const [isLevelIndicatorVisible, setIsLevelIndicatorVisible] = useState(false);
 
     const handleRatioChange = (newRatio: CameraRatio) => {
         setRatio(newRatio);
@@ -31,7 +32,7 @@ export function TopControlBar({ setRatio, ratio }: ControlBarProps) {
     };
 
     const handleLevelIndicatorToggle = () => {
-        setIsLevelIndicatorVisible(prev => !prev);
+        setIsLevelIndicatorVisible(!isLevelIndicatorVisible);
         // TODO: Implement level indicator functionality
     };
 
