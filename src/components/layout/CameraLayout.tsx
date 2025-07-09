@@ -6,6 +6,7 @@ import { useCamera } from '@/hooks/useCamera';
 import { RenderRequestPermission } from '../camera/RenderRequestPermission';
 import { RenderCameraGesture } from '../camera/RenderCameraGesture';
 import { RenderTiltIndicator } from '../camera/RenderTiltIndicator';
+import { RenderCameraGrid } from '../camera/RenderCameraGrid';
 import { TopControlBar } from '../ui/controls/TopControlBar';
 import { BottomControlBar } from '../ui/controls/BottomControlBar';
 
@@ -15,6 +16,7 @@ export function CameraLayout() {
     const { ref, zoom, handleCameraReady, aspectRatio, handleZoomChange, handleRatioChange, ratio, takePicture, lastPhoto, photos } = useCamera();
     // top control bar state
     const [isLevelIndicatorVisible, setIsLevelIndicatorVisible] = useState(true);
+    const [isGridVisible, setIsGridVisible] = useState(false);
 
     if (!permission || !mediaPermission) return <View />;
 
@@ -28,7 +30,8 @@ export function CameraLayout() {
     return (
         <View style={styles.container}>
             <TopControlBar ratio={ratio} setRatio={handleRatioChange}
-                isLevelIndicatorVisible={isLevelIndicatorVisible} setIsLevelIndicatorVisible={setIsLevelIndicatorVisible} />
+                isLevelIndicatorVisible={isLevelIndicatorVisible} setIsLevelIndicatorVisible={setIsLevelIndicatorVisible} isGridVisible={isGridVisible}
+                setIsGridVisible={setIsGridVisible} />
             <CameraView
                 style={[styles.camera, { aspectRatio }]}
                 ref={ref}
@@ -36,6 +39,10 @@ export function CameraLayout() {
                 zoom={zoom}
                 responsiveOrientationWhenOrientationLocked
                 onCameraReady={handleCameraReady}
+                ratio={ratio}
+            />
+            <RenderCameraGrid
+                isVisible={isGridVisible}
                 ratio={ratio}
             />
             <RenderCameraGesture
