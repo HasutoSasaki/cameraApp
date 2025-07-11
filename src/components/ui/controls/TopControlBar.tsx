@@ -10,12 +10,13 @@ interface ControlBarProps {
     ratio: CameraRatio;
     isLevelIndicatorVisible: boolean;
     setIsLevelIndicatorVisible: (visible: boolean) => void;
+    isGridVisible: boolean;
+    setIsGridVisible: (visible: boolean) => void;
 
 }
-export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsLevelIndicatorVisible }: ControlBarProps) {
+export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsLevelIndicatorVisible, isGridVisible, setIsGridVisible }: ControlBarProps) {
     // 各ツールのON/OFF状態を管理
     const [isDrawingGridEnabled, setIsDrawingGridEnabled] = useState(false);
-    const [isGridVisible, setIsGridVisible] = useState(false);
 
     const handleRatioChange = (newRatio: CameraRatio) => {
         setRatio(newRatio);
@@ -27,7 +28,7 @@ export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsL
     };
 
     const toggleGridVisibility = () => {
-        setIsGridVisible(prev => !prev);
+        setIsGridVisible(!isGridVisible);
         // TODO: Implement grid visibility functionality
     };
 
