@@ -1,5 +1,4 @@
 import { View, StyleSheet } from 'react-native';
-import { useState } from 'react';
 import { CameraRatio } from 'expo-camera';
 import { ZIndex } from '@/assets/style/zindex';
 import { RatioSelector } from '@/components/ui/tools/RatioSelector';
@@ -12,29 +11,25 @@ interface ControlBarProps {
     setIsLevelIndicatorVisible: (visible: boolean) => void;
     isGridVisible: boolean;
     setIsGridVisible: (visible: boolean) => void;
+    isDrawingEnabled: boolean;
+    setIsDrawingEnabled: (enabled: boolean) => void;
 
 }
-export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsLevelIndicatorVisible, isGridVisible, setIsGridVisible }: ControlBarProps) {
-    // 各ツールのON/OFF状態を管理
-    const [isDrawingGridEnabled, setIsDrawingGridEnabled] = useState(false);
-
+export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsLevelIndicatorVisible, isGridVisible, setIsGridVisible, isDrawingEnabled, setIsDrawingEnabled }: ControlBarProps) {
     const handleRatioChange = (newRatio: CameraRatio) => {
         setRatio(newRatio);
     };
 
-    const toggleDrawingGrid = () => {
-        setIsDrawingGridEnabled(prev => !prev);
-        // TODO: Implement drawing grid functionality
+    const toggleDrawingMode = () => {
+        setIsDrawingEnabled(!isDrawingEnabled);
     };
 
     const toggleGridVisibility = () => {
         setIsGridVisible(!isGridVisible);
-        // TODO: Implement grid visibility functionality
     };
 
     const toggleLevelIndicator = () => {
         setIsLevelIndicatorVisible(!isLevelIndicatorVisible);
-        // TODO: Implement level indicator functionality
     };
 
     return (
@@ -44,10 +39,10 @@ export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsL
                 onRatioChange={handleRatioChange}
             />
             <CameraToolsPanel
-                toggleDrawingGrid={toggleDrawingGrid}
+                toggleDrawingMode={toggleDrawingMode}
                 toggleGridVisibility={toggleGridVisibility}
                 toggleLevelIndicator={toggleLevelIndicator}
-                isDrawingGridEnabled={isDrawingGridEnabled}
+                isDrawingEnabled={isDrawingEnabled}
                 isGridVisible={isGridVisible}
                 isLevelIndicatorVisible={isLevelIndicatorVisible}
             />

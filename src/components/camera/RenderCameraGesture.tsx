@@ -1,6 +1,7 @@
 import type { ZoomLevel } from '../../assets/types/types';
 import { useRef, useEffect } from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';
+import { ZIndex } from '@/assets/style/zindex';
 
 interface Touch {
     pageX: number;
@@ -104,5 +105,6 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
+        zIndex: ZIndex.camera_gesture,
     },
 });

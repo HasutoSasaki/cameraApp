@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
+import { ZIndex } from '@/assets/style/zindex';
 
 interface Tilt {
     x: number;
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
         top: '45%',
         alignSelf: 'center',
         alignItems: 'center',
+        zIndex: ZIndex.tilt_indicator,
         gap: 20,
     },
     indicatorContainer: {
