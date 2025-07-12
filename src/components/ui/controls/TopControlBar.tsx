@@ -1,5 +1,4 @@
 import { View, StyleSheet } from 'react-native';
-import { useState } from 'react';
 import { CameraRatio } from 'expo-camera';
 import { ZIndex } from '@/assets/style/zindex';
 import { RatioSelector } from '@/components/ui/tools/RatioSelector';
@@ -27,12 +26,10 @@ export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsL
 
     const toggleGridVisibility = () => {
         setIsGridVisible(!isGridVisible);
-        // TODO: Implement grid visibility functionality
     };
 
     const toggleLevelIndicator = () => {
         setIsLevelIndicatorVisible(!isLevelIndicatorVisible);
-        // TODO: Implement level indicator functionality
     };
 
     return (
