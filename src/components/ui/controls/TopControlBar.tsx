@@ -12,19 +12,17 @@ interface ControlBarProps {
     setIsLevelIndicatorVisible: (visible: boolean) => void;
     isGridVisible: boolean;
     setIsGridVisible: (visible: boolean) => void;
+    isDrawingEnabled: boolean;
+    setIsDrawingEnabled: (enabled: boolean) => void;
 
 }
-export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsLevelIndicatorVisible, isGridVisible, setIsGridVisible }: ControlBarProps) {
-    // 各ツールのON/OFF状態を管理
-    const [isDrawingGridEnabled, setIsDrawingGridEnabled] = useState(false);
-
+export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsLevelIndicatorVisible, isGridVisible, setIsGridVisible, isDrawingEnabled, setIsDrawingEnabled }: ControlBarProps) {
     const handleRatioChange = (newRatio: CameraRatio) => {
         setRatio(newRatio);
     };
 
-    const toggleDrawingGrid = () => {
-        setIsDrawingGridEnabled(prev => !prev);
-        // TODO: Implement drawing grid functionality
+    const toggleDrawingMode = () => {
+        setIsDrawingEnabled(!isDrawingEnabled);
     };
 
     const toggleGridVisibility = () => {
@@ -44,10 +42,10 @@ export function TopControlBar({ setRatio, ratio, isLevelIndicatorVisible, setIsL
                 onRatioChange={handleRatioChange}
             />
             <CameraToolsPanel
-                toggleDrawingGrid={toggleDrawingGrid}
+                toggleDrawingMode={toggleDrawingMode}
                 toggleGridVisibility={toggleGridVisibility}
                 toggleLevelIndicator={toggleLevelIndicator}
-                isDrawingGridEnabled={isDrawingGridEnabled}
+                isDrawingEnabled={isDrawingEnabled}
                 isGridVisible={isGridVisible}
                 isLevelIndicatorVisible={isLevelIndicatorVisible}
             />
