@@ -11,10 +11,10 @@ interface CameraToolsPanelProps {
 
 const CAMERA_TOOLS = [
     {
-        id: 'drawing-grid',
+        id: 'drawing-mode',
         source: require('@/assets/images/icon/grid_plus.png'),
         action: 'toggleDrawingMode' as const,
-        accessibilityLabel: 'Toggle drawing grid tool',
+        accessibilityLabel: 'Toggle drawing mode tool',
         stateKey: 'isDrawingEnabled' as const
     },
     {
