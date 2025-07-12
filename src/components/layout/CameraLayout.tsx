@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as MediaLibrary from 'expo-media-library';
 import { useCamera } from '@/hooks/useCamera';
 import { RenderRequestPermission } from '../camera/RenderRequestPermission';
 import { RenderCameraGesture } from '../camera/RenderCameraGesture';
 import { RenderTiltIndicator } from '../camera/RenderTiltIndicator';
 import { RenderCameraGrid } from '../camera/RenderCameraGrid';
+import { RenderDrawingOverlay } from '../camera/RenderDrawingOverlay';
 import { TopControlBar } from '../ui/controls/TopControlBar';
 import { BottomControlBar } from '../ui/controls/BottomControlBar';
+
 
 export function CameraLayout() {
     const [permission, requestPermission] = useCameraPermissions();
@@ -17,6 +20,7 @@ export function CameraLayout() {
     // top control bar state
     const [isLevelIndicatorVisible, setIsLevelIndicatorVisible] = useState(true);
     const [isGridVisible, setIsGridVisible] = useState(false);
+    const [isDrawingEnabled, setIsDrawingEnabled] = useState(false);
 
     if (!permission || !mediaPermission) return <View />;
 
@@ -28,10 +32,10 @@ export function CameraLayout() {
     }
 
     return (
-        <View style={styles.container}>
+        <GestureHandlerRootView style={styles.container}>
             <TopControlBar ratio={ratio} setRatio={handleRatioChange}
                 isLevelIndicatorVisible={isLevelIndicatorVisible} setIsLevelIndicatorVisible={setIsLevelIndicatorVisible} isGridVisible={isGridVisible}
-                setIsGridVisible={setIsGridVisible} />
+                setIsGridVisible={setIsGridVisible} isDrawingEnabled={isDrawingEnabled} setIsDrawingEnabled={setIsDrawingEnabled} />
             <CameraView
                 style={[styles.camera, { aspectRatio }]}
                 ref={ref}
@@ -49,6 +53,10 @@ export function CameraLayout() {
                 handleZoomChange={handleZoomChange}
                 zoom={zoom}
             />
+            <RenderDrawingOverlay
+                isVisible={isDrawingEnabled}
+                ratio={ratio}
+            />
             <RenderTiltIndicator isVisible={isLevelIndicatorVisible} />
             <BottomControlBar
                 photos={photos}
@@ -57,7 +65,7 @@ export function CameraLayout() {
                 takePicture={takePicture}
                 lastPhoto={lastPhoto}
             />
-        </View>
+        </GestureHandlerRootView>
     );
 }
 
