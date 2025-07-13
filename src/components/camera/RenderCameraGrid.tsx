@@ -1,5 +1,6 @@
 import { View, StyleSheet, Dimensions } from 'react-native'
 import { type CameraRatio } from 'expo-camera'
+import { ZIndex } from '@/assets/style/zindex';
 
 interface RenderCameraGridProps {
     isVisible: boolean;
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 10,
+        zIndex: ZIndex.camera_grid,
     },
     verticalLine: {
         position: 'absolute',

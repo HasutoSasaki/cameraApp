@@ -1,21 +1,21 @@
 import { View, Image, StyleSheet, Pressable } from 'react-native';
 
 interface CameraToolsPanelProps {
-    toggleDrawingGrid: () => void;
+    toggleDrawingMode: () => void;
     toggleGridVisibility: () => void;
     toggleLevelIndicator: () => void;
-    isDrawingGridEnabled: boolean;
+    isDrawingEnabled: boolean;
     isGridVisible: boolean;
     isLevelIndicatorVisible: boolean;
 }
 
 const CAMERA_TOOLS = [
     {
-        id: 'drawing-grid',
+        id: 'drawing-mode',
         source: require('@/assets/images/icon/grid_plus.png'),
-        action: 'toggleDrawingGrid' as const,
-        accessibilityLabel: 'Toggle drawing grid tool',
-        stateKey: 'isDrawingGridEnabled' as const
+        action: 'toggleDrawingMode' as const,
+        accessibilityLabel: 'Toggle drawing mode tool',
+        stateKey: 'isDrawingEnabled' as const
     },
     {
         id: 'grid-visibility',
@@ -34,21 +34,21 @@ const CAMERA_TOOLS = [
 ] as const;
 
 export function CameraToolsPanel({
-    toggleDrawingGrid,
+    toggleDrawingMode,
     toggleGridVisibility,
     toggleLevelIndicator,
-    isDrawingGridEnabled = false,
+    isDrawingEnabled = false,
     isGridVisible = false,
     isLevelIndicatorVisible = false
 }: CameraToolsPanelProps) {
     const actionMap = {
-        toggleDrawingGrid,
+        toggleDrawingMode,
         toggleGridVisibility,
         toggleLevelIndicator,
     };
 
     const stateMap = {
-        isDrawingGridEnabled,
+        isDrawingEnabled,
         isGridVisible,
         isLevelIndicatorVisible
     };
