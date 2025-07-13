@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS } from 'react-native-reanimated';
 import { ZIndex } from '@/assets/style/zindex';
@@ -62,6 +62,16 @@ export function RenderDrawingOverlay({ isVisible, ratio }: RenderDrawingOverlayP
         }
     }, []);
 
+    // すべての線をクリアする関数
+    const clearAllPaths = useCallback(() => {
+        try {
+            setPaths([]);
+            setCurrentPath([]);
+        } catch (error) {
+            console.error('Error clearing paths:', error);
+        }
+    }, []);
+
     const panGesture = Gesture.Pan()
         .onBegin((event) => {
             const { x, y } = event;
@@ -120,6 +130,16 @@ export function RenderDrawingOverlay({ isVisible, ratio }: RenderDrawingOverlayP
 
     return (
         <View style={[styles.overlay, { aspectRatio }]}>
+            {/* クリアボタン - 線が描かれている時のみ表示 */}
+            {(paths.length > 0 || currentPath.length > 0) && (
+                <TouchableOpacity
+                    style={styles.clearButton}
+                    onPress={clearAllPaths}
+                >
+                    <Text style={styles.clearButtonText}>クリア</Text>
+                </TouchableOpacity>
+            )}
+
             <GestureDetector gesture={panGesture}>
                 <Animated.View style={StyleSheet.absoluteFillObject}>
                     {/* 完成した線の描画 */}
@@ -159,5 +179,20 @@ const styles = StyleSheet.create({
         backgroundColor: DEFAULT_COLOR,
         borderRadius: STROKE_WIDTH / 2,
         transformOrigin: 'left center',
+    },
+    clearButton: {
+        position: 'absolute',
+        top: 100,
+        right: 118,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 8,
+        zIndex: 100,
+    },
+    clearButtonText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: '600',
     },
 });
