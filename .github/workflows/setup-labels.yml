@@ -3,6 +3,9 @@ name: Setup Repository Labels
 on:
   workflow_call:
 
+permissions:
+  issues: write
+  contents: read
 jobs:
   setup-labels:
     runs-on: ubuntu-latest
