@@ -28,13 +28,13 @@ jobs:
               
               if (missing.length === 0) {
                 console.log('All target labels already exist. Skipping setup.');
-                return 'skip';
+                fs.appendFileSync(process.env.GITHUB_OUTPUT, 'result=skip\n');
               }
               
-              return 'proceed';
+              fs.appendFileSync(process.env.GITHUB_OUTPUT, 'result=proceed\n');
             } catch (error) {
               console.error('Error checking labels:', error);
-              return 'proceed';
+              fs.appendFileSync(process.env.GITHUB_OUTPUT, 'result=proceed\n');
             }
 
       - name: Setup Labels
