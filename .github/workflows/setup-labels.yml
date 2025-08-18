@@ -24,10 +24,10 @@ jobs:
               // 設定予定のラベルが既に存在するかチェック
               const targetLabels = ['deps', 'npm', 'security', 'major', 'ci'];
               const existingLabels = labels.map(label => label.name);
-              const hasTargetLabels = targetLabels.filter(label => existingLabels.includes(label));
+              const missing = targetLabels.filter(l => !existingLabels.includes(l));
               
-              if (hasTargetLabels.length === 0) {
-                console.log('Target labels already exist. Skipping setup.');
+              if (missing.length === 0) {
+                console.log('All target labels already exist. Skipping setup.');
                 return 'skip';
               }
               
