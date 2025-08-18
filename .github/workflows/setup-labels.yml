@@ -1,7 +1,7 @@
 name: Setup Repository Labels
 
 on:
-  workflow_call:
+  workflow_dispatch:
 
 permissions:
   issues: write
