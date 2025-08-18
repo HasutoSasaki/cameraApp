@@ -62,7 +62,8 @@
         {
           "motionPermission": "Allow $(PRODUCT_NAME) to access your device motion"
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
