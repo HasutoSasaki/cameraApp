@@ -1,0 +1,57 @@
+version: 2
+updates:
+  ## security updates
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '04:30'
+      timezone: 'Asia/Tokyo'
+    assignees:
+      - HasutoSasaki
+    allow:
+      - dependency-type: 'direct'
+      - dependency-type: 'indirect'
+    open-pull-requests-limit: 5
+    labels: ['deps', 'security']
+    commit-message:
+      prefix: 'chore(security)'
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-major'
+
+  # major updates (monthly)
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+      day: 'saturday'
+      time: '04:30'
+      timezone: 'Asia/Tokyo'
+    assignees:
+      - HasutoSasaki
+    allow:
+      - dependency-type: 'direct'
+    labels: ['deps', 'major']
+    commit-message:
+      prefix: 'chore(major)'
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-minor'
+          - 'version-update:semver-patch'
+
+  ## github actions (weekly)
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'saturday'
+      time: '04:30'
+      timezone: 'Asia/Tokyo'
+    assignees:
+      - HasutoSasaki
+    labels: ['deps', 'ci']
+    commit-message:
+      prefix: 'chore(actions)'
