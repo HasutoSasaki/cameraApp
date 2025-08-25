@@ -1,0 +1,36 @@
+version: 2
+updates:
+  ## npm package updates
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '04:30'
+      timezone: 'Asia/Tokyo'
+    assignees:
+      - HasutoSasaki
+    allow:
+      - dependency-type: 'direct'
+      - dependency-type: 'indirect'
+    open-pull-requests-limit: 5
+    labels: ['deps', 'npm']
+    commit-message:
+      prefix: 'chore(deps)'
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-major'
+
+  ## github actions (weekly)
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'saturday'
+      time: '04:30'
+      timezone: 'Asia/Tokyo'
+    assignees:
+      - HasutoSasaki
+    labels: ['deps', 'ci']
+    commit-message:
+      prefix: 'chore(actions)'
