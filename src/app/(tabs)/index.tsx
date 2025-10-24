@@ -1,13 +1,11 @@
-import { Text, View, StyleSheet } from "react-native";
-import { Link } from "expo-router"
-import { GroupMode } from "@/components/layout/CameraLayout";
+import { Text, View, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
+import { CameraLayout } from '@/components/layout/CameraLayout';
 
 export default function Index() {
   return (
-    <View
-      style={styles.container}
-    >
-      <GroupMode />
+    <View style={styles.container}>
+      <CameraLayout />
     </View>
   );
 }
@@ -26,6 +24,5 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     marginTop: 10,
-  }
+  },
 });
-
