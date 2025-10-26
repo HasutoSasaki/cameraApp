@@ -15,30 +15,30 @@ interface Props {
   lastPhoto: string | null;
 }
 
-export function BottomControlBar({ photos, zoom, handleZoomChange, takePicture, lastPhoto }: Props) {
+export function BottomControlBar({
+  photos,
+  zoom,
+  handleZoomChange,
+  takePicture,
+  lastPhoto,
+}: Props) {
   return (
     <View style={styles.container}>
       <ModeSelector />
       <View style={styles.captureControls}>
         <View style={styles.gridItem}>
-          <Thumbnail
-            lastPhoto={lastPhoto}
-            photos={photos}
-          />
+          <Thumbnail lastPhoto={lastPhoto} photos={photos} />
         </View>
         <View style={styles.gridItem}>
           <ShutterButton takePicture={takePicture} />
         </View>
         <View style={styles.gridItem}>
-          <ZoomSelector
-            currentZoom={zoom}
-            handleZoomChange={handleZoomChange}
-          />
+          <ZoomSelector currentZoom={zoom} handleZoomChange={handleZoomChange} />
         </View>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     flexBasis: '33.33%',
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
