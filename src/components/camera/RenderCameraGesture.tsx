@@ -94,10 +94,10 @@ export function RenderCameraGesture({ handleZoomChange, zoom }: Props) {
 const styles = StyleSheet.create({
   absoluteFill: {
     position: 'absolute',
-    top: 0,
+    top: 80, // TopControlBarエリアを除外
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 160, // BottomControlBarエリアを除外
     zIndex: ZIndex.camera_gesture,
   },
 });
