@@ -12,7 +12,7 @@ export const RATIO_ASPECT_VALUES = {
   [CAMERA_RATIOS.WIDESCREEN]: 9 / 16,
 };
 
-export const DEFAULT_RATIO: CameraRatio = CAMERA_RATIOS.STANDARD;
+export const DEFAULT_RATIO: CameraRatio = CAMERA_RATIOS.WIDESCREEN;
 
 export const RATIO_CONFIGURATIONS = [
   {
