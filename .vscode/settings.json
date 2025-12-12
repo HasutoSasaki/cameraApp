@@ -3,5 +3,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
-    }
+    },
+    "sweetpad.build.xcodeWorkspacePath": "node_modules/react-native-gesture-handler/apple/RNGestureHandler.xcodeproj/project.xcworkspace"
 }
