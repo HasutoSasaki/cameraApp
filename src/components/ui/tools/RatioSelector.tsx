@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Pressable, View, Text } from 'react-native';
+import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { CameraRatio } from 'expo-camera';
 import { RATIO_CONFIGURATIONS } from '@/assets/constants/ratio';
 import { Colors } from '@/assets/style/colors';
