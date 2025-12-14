@@ -38,6 +38,7 @@ export function CameraLayout() {
 
   // camera mode state
   const [cameraMode, setCameraMode] = useState('closeup');
+  const [isViewfinderVisible, setIsViewfinderVisible] = useState(true);
 
   if (!permission || !mediaPermission) return <View />;
 
@@ -75,7 +76,7 @@ export function CameraLayout() {
       <RenderCameraGesture handleZoomChange={handleZoomChange} zoom={zoom} />
       <RenderDrawingOverlay isVisible={isDrawingEnabled} ratio={ratio} />
       <RenderTiltIndicator isVisible={isLevelIndicatorVisible} />
-      <RenderViewfinderFrame isVisible={true} mode={cameraMode} ratio={ratio} />
+      <RenderViewfinderFrame isVisible={isViewfinderVisible} mode={cameraMode} ratio={ratio} />
       {/* <RenderCameraBorders isVisible={true} ratio={ratio} /> */}
       <BottomControlBar
         photos={photos}
