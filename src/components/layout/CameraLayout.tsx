@@ -9,8 +9,12 @@ import { RenderCameraGesture } from '../camera/RenderCameraGesture';
 import { RenderTiltIndicator } from '../camera/RenderTiltIndicator';
 import { RenderCameraGrid } from '../camera/RenderCameraGrid';
 import { RenderDrawingOverlay } from '../camera/RenderDrawingOverlay';
+import { RenderViewfinderFrame } from '../camera/RenderViewfinderFrame';
+import { RenderCameraBorders } from '../camera/RenderCameraBorders';
 import { TopControlBar } from '../ui/controls/TopControlBar';
 import { BottomControlBar } from '../ui/controls/BottomControlBar';
+import { Colors } from '@/assets/style/colors';
+import { Layout } from '@/assets/style/layout';
 
 export function CameraLayout() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -31,6 +35,9 @@ export function CameraLayout() {
   const [isLevelIndicatorVisible, setIsLevelIndicatorVisible] = useState(true);
   const [isGridVisible, setIsGridVisible] = useState(false);
   const [isDrawingEnabled, setIsDrawingEnabled] = useState(false);
+
+  // camera mode state
+  const [cameraMode, setCameraMode] = useState('closeup');
 
   if (!permission || !mediaPermission) return <View />;
 
@@ -68,12 +75,16 @@ export function CameraLayout() {
       <RenderCameraGesture handleZoomChange={handleZoomChange} zoom={zoom} />
       <RenderDrawingOverlay isVisible={isDrawingEnabled} ratio={ratio} />
       <RenderTiltIndicator isVisible={isLevelIndicatorVisible} />
+      <RenderViewfinderFrame isVisible={true} mode={cameraMode} ratio={ratio} />
+      {/* <RenderCameraBorders isVisible={true} ratio={ratio} /> */}
       <BottomControlBar
         photos={photos}
         zoom={zoom}
         handleZoomChange={handleZoomChange}
         takePicture={takePicture}
         lastPhoto={lastPhoto}
+        cameraMode={cameraMode}
+        onModeChange={setCameraMode}
       />
     </GestureHandlerRootView>
   );
@@ -81,8 +92,9 @@ export function CameraLayout() {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Layout.TOP_CONTROL_BAR_HEIGHT,
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: Colors.BLACK,
     alignItems: 'center',
     justifyContent: 'center',
   },
