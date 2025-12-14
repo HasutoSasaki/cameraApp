@@ -69,7 +69,11 @@ export function CameraToolsPanel({
         return (
           <Pressable
             key={tool.id}
-            style={[styles.toolButton, isActive && styles.activeToolButton]}
+            style={({ pressed }) => [
+              styles.toolButton,
+              isActive && styles.activeToolButton,
+              pressed && styles.pressedToolButton,
+            ]}
             onPress={() => handleToolPress(tool.action)}
             accessibilityLabel={tool.accessibilityLabel}
             accessibilityState={{ selected: isActive }}
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(128, 128, 128, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
     justifyContent: 'center',
@@ -103,11 +107,11 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   activeToolButton: {
     backgroundColor: Colors.ACCENT_COLOR,
@@ -117,9 +121,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.4,
     shadowRadius: 4,
-    elevation: 4,
+    elevation: 6,
   },
   toolIcon: {
     width: 20,
@@ -128,5 +132,9 @@ const styles = StyleSheet.create({
   },
   activeToolIcon: {
     tintColor: Colors.TEXT_BLACK,
+  },
+  pressedToolButton: {
+    opacity: 0.8,
+    transform: [{ scale: 0.95 }],
   },
 });
