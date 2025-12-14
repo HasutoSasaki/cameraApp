@@ -6,7 +6,7 @@ The current camera UI implementation differs significantly from the Figma design
 ## Proposed Solution
 Update the camera UI components to match the Figma design specifications, implementing:
 
-1. **Color Scheme Alignment**: Apply the specified color palette (#2CD3F4 main background, #FFE32D accents, white/black text)
+1. **BREAKING Color Scheme Alignment**: Apply the specified color palette (#2CD3F4 main background, #FFE32D accents, white/black text) - this represents a breaking visual change from the current design
 2. **Layout Structure**: Reorganize components to match the Figma layout with proper positioning and spacing
 3. **Mode Selection**: Update the mode selector to show text labels ("自撮", "全身", "グループ", "アップ") with highlight styling for active mode
 4. **Visual Elements**: Add camera viewfinder overlay, framing guides, and proper visual feedback elements
