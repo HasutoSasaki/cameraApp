@@ -1,37 +1,82 @@
-import { Pressable, Image, StyleSheet, View } from 'react-native';
+import { Pressable, Image, StyleSheet, View, Text } from 'react-native';
 import { images } from '@/assets/index';
+import { Colors } from '@/assets/style/colors';
 
-export function ModeSelector() {
+interface ModeSelectorProps {
+  displayMode?: 'text' | 'icon';
+  activeMode?: string;
+  onModeChange?: (mode: string) => void;
+}
+
+export function ModeSelector({
+  displayMode = 'text',
+  activeMode = 'closeup',
+  onModeChange
+}: ModeSelectorProps) {
   const modeList = [
     {
       label: 'Selfie',
+      textLabel: '自撮',
       icon: images.selfieIcon,
       mode: 'selfie',
     },
     {
       label: 'Solo',
+      textLabel: '全身',
       icon: images.soloIcon,
       mode: 'solo',
     },
     {
       label: 'Solo Stand',
+      textLabel: 'グループ',
       icon: images.soloStandIcon,
-      mode: 'solo_stand',
+      mode: 'group',
     },
     {
       label: 'Group',
+      textLabel: 'アップ',
       icon: images.groupIcon,
-      mode: 'group',
+      mode: 'closeup',
     },
   ];
 
+  const handleModePress = (mode: string) => {
+    onModeChange?.(mode);
+  };
+
   return (
     <View style={styles.container}>
-      {modeList.map(mode => (
-        <Pressable key={mode.label} style={styles.modeButton}>
-          <Image source={mode.icon} style={styles.modeIcon} resizeMode="contain" />
-        </Pressable>
-      ))}
+      {modeList.map(mode => {
+        const isActive = activeMode === mode.mode;
+
+        return (
+          <Pressable
+            key={mode.label}
+            style={styles.modeButton}
+            onPress={() => handleModePress(mode.mode)}
+          >
+            {displayMode === 'icon' ? (
+              <Image
+                source={mode.icon}
+                style={[
+                  styles.modeIcon,
+                  isActive && styles.activeModeIcon
+                ]}
+                resizeMode="contain"
+              />
+            ) : (
+              <Text
+                style={[
+                  styles.modeText,
+                  isActive ? styles.activeModeText : styles.inactiveModeText
+                ]}
+              >
+                {mode.textLabel}
+              </Text>
+            )}
+          </Pressable>
+        );
+      })}
     </View>
   );
 }
@@ -41,15 +86,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
     backgroundColor: 'transparent',
   },
   modeButton: {
-    marginHorizontal: 10,
+    marginHorizontal: 12,
     alignItems: 'center',
   },
   modeIcon: {
     width: 45,
     height: 45,
+  },
+  activeModeIcon: {
+    tintColor: Colors.ACCENT_COLOR,
+  },
+  modeText: {
+    fontSize: 14,
+    fontWeight: '400',
+    textAlign: 'center',
+  },
+  activeModeText: {
+    color: Colors.ACCENT_COLOR,
+    fontWeight: 'bold',
+  },
+  inactiveModeText: {
+    color: Colors.TEXT_WHITE,
   },
 });

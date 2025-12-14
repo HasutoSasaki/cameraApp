@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { CameraRatio } from 'expo-camera';
 import { ZIndex } from '@/assets/style/zindex';
+import { Layout } from '@/assets/style/layout';
 import { RatioSelector } from '@/components/ui/tools/RatioSelector';
 import { CameraToolsPanel } from '@/components/controlBar/CameraToolsPanel';
 
@@ -58,13 +59,13 @@ export function TopControlBar({
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 40,
+    top: Layout.SAFE_AREA_TOP,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: Layout.CONTROL_BAR_PADDING,
     paddingVertical: 10,
     backgroundColor: 'transparent',
     borderRadius: 5,

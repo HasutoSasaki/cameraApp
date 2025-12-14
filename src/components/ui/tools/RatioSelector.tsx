@@ -1,6 +1,7 @@
-import { Image, StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { CameraRatio } from 'expo-camera';
 import { RATIO_CONFIGURATIONS } from '@/assets/constants/ratio';
+import { Colors } from '@/assets/style/colors';
 
 interface RatioSelectorProps {
   currentRatio: CameraRatio;
@@ -28,29 +29,37 @@ export function RatioSelector({ currentRatio, onRatioChange }: RatioSelectorProp
   const currentConfig = getCurrentConfig();
 
   return (
-    <Pressable
-      style={styles.ratioButton}
-      onPress={handleRatioPress}
-      accessibilityLabel={`Current ratio: ${currentConfig.label}. Tap to cycle to next ratio`}
-      accessibilityHint="Cycles through available camera ratios"
-    >
-      <Image
-        source={currentConfig.icon}
-        style={[styles.ratioImage, { aspectRatio: currentConfig.aspectRatio }]}
-        resizeMode="contain"
-      />
-    </Pressable>
+    <View style={styles.container}>
+      <Pressable
+        style={styles.ratioButton}
+        onPress={handleRatioPress}
+        accessibilityLabel={`Current ratio: ${currentConfig.label}. Tap to cycle to next ratio`}
+        accessibilityHint="Cycles through available camera ratios"
+      >
+        <Text style={styles.ratioText}>{currentConfig.label}</Text>
+      </Pressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'flex-start',
+  },
   ratioButton: {
-    padding: 8,
-    borderRadius: 8,
-    width: 40,
-    height: 40,
+    backgroundColor: Colors.TEXT_WHITE,
+    borderWidth: 1,
+    borderColor: Colors.TEXT_BLACK,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  ratioText: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: Colors.TEXT_BLACK,
   },
   ratioImage: {
     width: 30,

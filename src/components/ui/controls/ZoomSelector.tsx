@@ -2,6 +2,8 @@ import { FunctionComponent } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import type { ZoomLevel } from '../../../assets/types/types';
 import { ZOOM_LEVELS, MIN_ZOOM, DEFAULT_ZOOM, DISPLAY_MAX } from '@/assets/constants/zoom';
+import { Colors } from '@/assets/style/colors';
+import { Layout } from '@/assets/style/layout';
 
 interface Props {
   handleZoomChange: (zoom: ZoomLevel) => void;
@@ -54,29 +56,54 @@ export function ZoomSelector({ handleZoomChange, currentZoom }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
     flexDirection: 'row',
-    gap: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    borderRadius: 15,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderRadius: 18,
+    height: 32,
+    alignItems: 'center',
+    paddingHorizontal: 3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   zoomButton: {
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 5,
+    height: 26,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 14,
+    minWidth: 36,
+    marginHorizontal: 1.5,
   },
   selectedZoom: {
-    backgroundColor: 'white',
-    borderRadius: 15,
+    backgroundColor: Colors.ACCENT_COLOR,
+    shadowColor: Colors.ACCENT_COLOR,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    elevation: 6,
   },
   pressedZoom: {
-    opacity: 0.7,
+    opacity: 0.8,
+    transform: [{ scale: 0.95 }],
   },
   zoomText: {
-    color: 'white',
+    color: Colors.TEXT_WHITE,
     fontSize: 14,
     fontWeight: '600',
+    letterSpacing: 0.5,
   },
   selectedZoomText: {
-    color: 'black',
+    color: Colors.TEXT_BLACK,
+    fontWeight: '700',
   },
 });
