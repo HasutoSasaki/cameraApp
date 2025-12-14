@@ -1,6 +1,7 @@
-// filepath: [BottomControlBar.tsx](http://_vscodecontentref_/1)
 import { View, StyleSheet } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
+import { Colors } from '@/assets/style/colors';
+import { Layout } from '@/assets/style/layout';
 import { ZoomSelector } from './ZoomSelector';
 import { ShutterButton } from './ShutterButton';
 import { Thumbnail } from '../../gallery/Thumbnail';
@@ -13,6 +14,8 @@ interface Props {
   handleZoomChange: (zoom: ZoomLevel) => void;
   takePicture: () => Promise<void>;
   lastPhoto: string | null;
+  cameraMode?: string;
+  onModeChange?: (mode: string) => void;
 }
 
 export function BottomControlBar({
@@ -21,10 +24,16 @@ export function BottomControlBar({
   handleZoomChange,
   takePicture,
   lastPhoto,
+  cameraMode = 'closeup',
+  onModeChange,
 }: Props) {
   return (
     <View style={styles.container}>
-      <ModeSelector />
+      <ModeSelector
+        displayMode="text"
+        activeMode={cameraMode}
+        onModeChange={onModeChange}
+      />
       <View style={styles.captureControls}>
         <View style={styles.gridItem}>
           <Thumbnail lastPhoto={lastPhoto} photos={photos} />
@@ -46,14 +55,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingBottom: 40,
+    paddingBottom: Layout.SAFE_AREA_BOTTOM + Layout.CONTROL_BAR_PADDING,
+    paddingTop: Layout.CONTROL_BAR_PADDING,
   },
   captureControls: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 30,
-    marginTop: 20,
+    paddingHorizontal: Layout.CONTROL_BAR_PADDING,
+    marginTop: Layout.BUTTON_MARGIN,
   },
   gridItem: {
     flexBasis: '33.33%',
