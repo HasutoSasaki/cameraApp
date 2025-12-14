@@ -1,4 +1,5 @@
 import { View, Image, StyleSheet, Pressable } from 'react-native';
+import { Colors } from '@/assets/style/colors';
 
 interface CameraToolsPanelProps {
   toggleDrawingMode: () => void;
@@ -91,11 +92,14 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   toolButton: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(128, 128, 128, 0.6)',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -106,9 +110,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   activeToolButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    borderColor: 'rgba(255, 255, 255, 0.6)',
-    shadowColor: '#fff',
+    backgroundColor: Colors.ACCENT_COLOR,
+    borderColor: Colors.ACCENT_COLOR,
+    shadowColor: Colors.ACCENT_COLOR,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -116,14 +120,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 4,
-    transform: [{ scale: 1.05 }],
   },
   toolIcon: {
-    width: 24,
-    height: 24,
-    tintColor: 'rgba(255, 255, 255, 0.6)',
+    width: 20,
+    height: 20,
+    tintColor: Colors.TEXT_WHITE,
   },
   activeToolIcon: {
-    tintColor: '#fff',
+    tintColor: Colors.TEXT_BLACK,
   },
 });
