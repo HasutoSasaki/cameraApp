@@ -26,7 +26,7 @@ export function RenderViewfinderFrame({ isVisible, mode, ratio }: RenderViewfind
   const aspectRatio = getCameraAspectRatio();
   const cameraHeight = screenDimensions.width / aspectRatio;
 
-  // 顔の位置を考慮した上方向オフセット（カメラ高さの25%上に）
+  // 顔の位置を考慮した上方向オフセット（カメラ高さの30%上に）
   const verticalOffset = -(cameraHeight * 0.30);
 
   return (
