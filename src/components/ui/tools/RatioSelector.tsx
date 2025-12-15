@@ -47,15 +47,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   ratioButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: Colors.DARK_OVERLAY_60,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: Colors.WHITE_OVERLAY_30,
     paddingHorizontal: 12,
     paddingVertical: 5,
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: Colors.BLACK,
     shadowOffset: {
       width: 0,
       height: 2,

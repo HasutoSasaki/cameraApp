@@ -1,4 +1,5 @@
 import { Pressable, View, StyleSheet } from 'react-native';
+import { Colors } from '@/assets/style/colors';
 
 interface Props {
   takePicture: () => Promise<void>;
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: Colors.BLACK,
     shadowOffset: {
       width: 0,
       height: 2,

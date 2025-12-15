@@ -11,6 +11,9 @@ export const Colors = {
   // UI element colors
   DARK_PANEL: '#333333', // Dark background for bottom panel
   SEMI_TRANSPARENT_OVERLAY: 'rgba(210, 210, 210, 0.6)', // Semi-transparent gray overlays
+  DARK_OVERLAY_60: 'rgba(0, 0, 0, 0.6)', // Standard dark semi-transparent background
+  WHITE_OVERLAY_30: 'rgba(255, 255, 255, 0.3)', // Standard light semi-transparent border
+  WHITE_OVERLAY_70: 'rgba(255, 255, 255, 0.7)', // Standard light semi-transparent active element
 
   // Legacy/existing colors (for backward compatibility)
   BLACK: '#000000',

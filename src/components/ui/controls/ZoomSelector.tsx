@@ -57,12 +57,12 @@ export function ZoomSelector({ handleZoomChange, currentZoom }: Props) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: Colors.DARK_OVERLAY_60,
     borderRadius: 18,
     height: 32,
     alignItems: 'center',
     paddingHorizontal: 3,
-    shadowColor: '#000',
+    shadowColor: Colors.BLACK,
     shadowOffset: {
       width: 0,
       height: 2,

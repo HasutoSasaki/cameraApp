@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 import { ZIndex } from '@/assets/style/zindex';
+import { Colors } from '@/assets/style/colors';
 
 interface Tilt {
   x: number;
@@ -127,14 +128,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: Colors.WHITE_OVERLAY_30,
     borderRadius: 2,
   },
   tiltBar: {
     position: 'absolute',
     width: '100%',
     height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    backgroundColor: Colors.WHITE_OVERLAY_70,
     borderRadius: 2,
   },
   alignedTiltBar: {
