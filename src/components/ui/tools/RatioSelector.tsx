@@ -31,7 +31,7 @@ export function RatioSelector({ currentRatio, onRatioChange }: RatioSelectorProp
   return (
     <View style={styles.container}>
       <Pressable
-        style={styles.ratioButton}
+        style={({ pressed }) => [styles.ratioButton, pressed && styles.pressedButton]}
         onPress={handleRatioPress}
         accessibilityLabel={`Current ratio: ${currentConfig.label}. Tap to cycle to next ratio`}
         accessibilityHint="Cycles through available camera ratios"
@@ -47,19 +47,32 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   ratioButton: {
-    backgroundColor: Colors.TEXT_WHITE,
+    backgroundColor: Colors.DARK_OVERLAY_60,
     borderWidth: 1,
-    borderColor: Colors.TEXT_BLACK,
+    borderColor: Colors.WHITE_OVERLAY_30,
     paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 4,
+    paddingVertical: 5,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: Colors.BLACK,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   ratioText: {
-    fontSize: 12,
-    fontWeight: '400',
-    color: Colors.TEXT_BLACK,
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.TEXT_WHITE,
+    letterSpacing: 0.5,
+  },
+  pressedButton: {
+    opacity: 0.8,
+    transform: [{ scale: 0.95 }],
   },
   ratioImage: {
     width: 30,

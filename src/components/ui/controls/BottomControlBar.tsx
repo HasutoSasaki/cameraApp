@@ -1,6 +1,5 @@
 import { View, StyleSheet } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
-import { Colors } from '@/assets/style/colors';
 import { Layout } from '@/assets/style/layout';
 import { ZoomSelector } from './ZoomSelector';
 import { ShutterButton } from './ShutterButton';
@@ -29,11 +28,7 @@ export function BottomControlBar({
 }: Props) {
   return (
     <View style={styles.container}>
-      <ModeSelector
-        displayMode="text"
-        activeMode={cameraMode}
-        onModeChange={onModeChange}
-      />
+      <ModeSelector displayMode="text" activeMode={cameraMode} onModeChange={onModeChange} />
       <View style={styles.captureControls}>
         <View style={styles.gridItem}>
           <Thumbnail lastPhoto={lastPhoto} photos={photos} />

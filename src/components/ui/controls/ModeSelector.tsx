@@ -11,7 +11,7 @@ interface ModeSelectorProps {
 export function ModeSelector({
   displayMode = 'text',
   activeMode = 'closeup',
-  onModeChange
+  onModeChange,
 }: ModeSelectorProps) {
   const modeList = [
     {
@@ -52,23 +52,20 @@ export function ModeSelector({
         return (
           <Pressable
             key={mode.label}
-            style={styles.modeButton}
+            style={({ pressed }) => [styles.modeButton, pressed && styles.pressedModeButton]}
             onPress={() => handleModePress(mode.mode)}
           >
             {displayMode === 'icon' ? (
               <Image
                 source={mode.icon}
-                style={[
-                  styles.modeIcon,
-                  isActive && styles.activeModeIcon
-                ]}
+                style={[styles.modeIcon, isActive && styles.activeModeIcon]}
                 resizeMode="contain"
               />
             ) : (
               <Text
                 style={[
                   styles.modeText,
-                  isActive ? styles.activeModeText : styles.inactiveModeText
+                  isActive ? styles.activeModeText : styles.inactiveModeText,
                 ]}
               >
                 {mode.textLabel}
@@ -101,14 +98,19 @@ const styles = StyleSheet.create({
   },
   modeText: {
     fontSize: 14,
-    fontWeight: '400',
+    fontWeight: '600',
     textAlign: 'center',
+    letterSpacing: 0.5,
   },
   activeModeText: {
     color: Colors.ACCENT_COLOR,
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
   inactiveModeText: {
     color: Colors.TEXT_WHITE,
+  },
+  pressedModeButton: {
+    opacity: 0.8,
+    transform: [{ scale: 0.95 }],
   },
 });

@@ -42,14 +42,61 @@ For comprehensive styling guidelines including modern UI patterns, shadows, tran
 - Component-specific styling patterns
 
 ## Examples
-```typescript
-// ✅ Correct - using design tokens
-backgroundColor: Colors.MAIN_BACKGROUND,
-paddingTop: Layout.SAFE_AREA_TOP,
-height: Layout.TOP_CONTROL_BAR_HEIGHT,
 
-// ❌ Wrong - hardcoded values
-backgroundColor: '#2CD3F4',
-paddingTop: 44,
-height: 70,
+### Component Styling Examples
+```typescript
+// ✅ Correct - using design tokens and guidelines
+const styles = StyleSheet.create({
+  toolButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent background
+    borderRadius: 20, // Circular for 40px buttons
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+    color: Colors.TEXT_WHITE,
+  },
+  pressedButton: {
+    opacity: 0.8,
+    transform: [{ scale: 0.95 }],
+  },
+});
+
+// ❌ Wrong - hardcoded values and inconsistent patterns
+const styles = StyleSheet.create({
+  toolButton: {
+    backgroundColor: 'rgba(128, 128, 128, 0.6)', // Non-standard background
+    borderRadius: 5, // Inconsistent radius
+    shadowOpacity: 0.2, // Non-standard shadow
+  },
+  buttonText: {
+    fontSize: 12, // Non-standard font size
+    color: '#fff', // Hardcoded color
+  },
+});
+```
+
+### Interactive Pressable Pattern
+```typescript
+// ✅ Correct - consistent interactive feedback
+<Pressable
+  style={({ pressed }) => [
+    styles.button,
+    isActive && styles.activeButton,
+    pressed && styles.pressedButton,
+  ]}
+  onPress={handlePress}
+>
+  <Text style={styles.buttonText}>Label</Text>
+</Pressable>
+
+// ❌ Wrong - missing pressed state feedback
+<Pressable style={styles.button} onPress={handlePress}>
+  <Text style={styles.buttonText}>Label</Text>
+</Pressable>
 ```
